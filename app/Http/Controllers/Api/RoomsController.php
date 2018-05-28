@@ -62,21 +62,21 @@
           $room_id = Room::create($array)->id;
 
           if(count($request->image) > 1){
-               $this->uploadMultipleImages($request);
+               $this->uploadMultipleImages($request , $room_id);
           }else{
             $path_to_save = base_path() . '/public/images/rooms/';      
     $input_field_name = 'image';        
-    $image = app('App\Http\Controllers\Api\GalleryController')->saveImage($request,$path_to_save,$input_field_name);
+    $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$path_to_save,$input_field_name);
           DB::table('images')->insert(['room_id' => $room_id, 'image' => $image]);
 
           }
          
-         return \Response::json(array(  'error' => false,  'room_id' => $room_id ) );   
+         return \Response::json(array(  'error' => false,  'room_id' => $room_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
        }
 
 
 
-       public function uploadMultipleImages(Request $request){
+       public function uploadMultipleImages(Request $request , $id){
           $input = $request->all();  
       $files = count($request->image) - 1;
 
@@ -97,20 +97,15 @@
         }  
       }
 
-      $data['path_to_save'] = base_path() . '/images/rooms/';    
+      $data['path_to_save'] = base_path() . '/public/images/rooms/';   
       $data['input_field_name'] = 'image';       
       $data['request'] = $request; 
 
       $images = app('App\Http\Controllers\Api\GalleryController')->saveImages($data);
 
       foreach($images as $image){   
-       DB::table('images')->insert(['room_id' => $room_id, 'image' => $image]);
-             }
-      $uploaded_image_path = env("BASE_URL")."images/cars/full/".$images[0];
-
-        return $uploaded_image_path ;
-      
-    
+       DB::table('images')->insert(['room_id' => $id, 'image' => $image , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')]);
+             }  
   }
 
 
