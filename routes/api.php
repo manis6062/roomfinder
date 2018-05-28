@@ -24,6 +24,11 @@ Route::group(array('namespace' => 'Api' ), function() {
 
 
 	Route::post('users/fblogin', 'UsersController@fblogin');
+    Route::post('room/detail','RoomsController@detail');
+    Route::post('jagga/detail','JaggasController@detail');
+
+
+
 	Route::post('users/reset-password', 'UsersController@resetPassword');
 	Route::post('users/reset-password-process', 'UsersController@resetPasswordProcess');
 
@@ -78,7 +83,11 @@ Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api' )
 
 
      Route::post('users/logout', 'UsersController@logout');
-     Route::post('rooms/add','RoomsController@addRooms');
+     Route::post('room/add','RoomsController@addRoom');
+      Route::post('room/update-room','RoomsController@updateRoom');
+     Route::post('jagga/add','JaggasController@addJagga');
+     Route::post('jagga/update-jagga','JaggasController@updateJagga');
+
 	
 	Route::post('users/update-card-information', 'UserCardController@save');
 	Route::post('users/update-card-inform', 'UserCardController@inform');

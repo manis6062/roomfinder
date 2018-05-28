@@ -4,34 +4,28 @@
   use App\Http\Requests;
   use App\Http\Controllers\Controller;
   use App\Library\RoomFinderFunctions;
-  use App\Models\Room;
+  use App\Models\Jagga;
   use App\Models\User;
   use Lang,DB,Auth;
-  class RoomsController extends Controller
+  class JaggasController extends Controller
   {
 
 
-       public function addRoom(Request $request){
+       public function addJagga(Request $request){
         $input = $request->all();
         $details = array();
         $v = \Validator::make($input,   [ 
                 //about
          'user_id' => 'required|numeric|exists:users,id', 
          'type' => 'required',
-         'no_of_floor' =>'required',
-         'no_of_room' =>'required',
-          'kitchen' =>'required',
-          'parking' =>'required',
-           'restroom' =>'required',
             'phone_no' =>'required',
              'loc_lat' =>'required',
               'loc_lon' =>'required',
                'address' =>'required',
-                'image' =>'required',
-                'preference' =>'required',
                 'price' =>'required',
                 'description' => 'required',
-                 'occupied' => 'required'
+                 'sold' => 'required',
+                 'image' =>'required',
          ] );        
         if ($v->fails())
         {   
@@ -43,7 +37,7 @@
         }
 
         if(!is_array($request->image)){
-              $message = "";
+              $message = "The image field must be an array.";
               return \Response::json(array(  'error' => true,  'message' => Lang::get('messages.image_array') ) );
         }
 
@@ -51,82 +45,46 @@
         $user = User::find($input['user_id']);
          $array['user_id'] = $input['user_id'];
          $array['type'] = $input['type'];
-         $array['no_of_floor'] = $input['no_of_floor'];
-          $array['no_of_room'] = $input['no_of_room'];
-          $array['kitchen'] = $input['kitchen'];
-         $array['parking'] = $input['parking'];
-         $array['restroom'] = $input['restroom'];
          $array['phone_no'] = $input['phone_no'];
          $array['loc_lat'] = $input['loc_lat'];
          $array['loc_lon'] = $input['loc_lon'];
          $array['description'] = $input['description'];
           $array['address'] = $input['address'];
-           $array['preference'] = $input['preference'];
             $array['price'] = $input['price'];
-             $array['occupied'] = $input['occupied'];
-          $room_id = Room::create($array)->id;
+             $array['sold'] = $input['sold'];
+          $jagga_id = Jagga::create($array)->id;
 
           if(count($request->image) > 1){
-               $this->uploadMultipleImages($request , $room_id);
+               $this->uploadMultipleImages($request , $jagga_id);
           }else{
-            $path_to_save = base_path() . '/public/images/rooms/';      
+            $path_to_save = base_path() . '/public/images/jagga/';      
     $input_field_name = 'image';        
     $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$path_to_save,$input_field_name);
-          DB::table('images')->insert(['room_id' => $room_id, 'image' => $image]);
+          DB::table('images')->insert(['jagga_id' => $jagga_id, 'image' => $image]);
 
           }
          
-         return \Response::json(array(  'error' => false,  'room_id' => $room_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
+         return \Response::json(array(  'error' => false,  'jagga_id' => $jagga_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
        }
 
 
 
-         public function detail(Request $request){
-   $input = $request->all();
-
-   $details = array();
-   $v = \Validator::make($input,   [ 
-    'id' => 'required|numeric|exists:jaggas,id',                 
-    ] );
-   if ($v->fails())
-   {   
-    $msg = array();
-    $messages = $v->errors();           
-    foreach ($messages->all() as $message) {
-      return \Response::json(array(  'error' => true,  'message' => $message ) );
-    }  
-  }   
-  $details = Room::detail($input['id']);
-  if($details){
-    return \Response::json(array(  'error' => false,   'result' => $details  ) );
-  }else{
-    return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
-  }
-  }
-
-
-         public function updateRoom(Request $request){
+         public function updateJagga(Request $request){
 
     $input = $request->all();    
     
     $v = \Validator::make($input,   [ 
                 //about
-      'user_id' => 'required|numeric|exists:users,id', 
-         'type' => 'required',
-         'no_of_floor' =>'required',
-         'no_of_room' =>'required',
-          'kitchen' =>'required',
-          'parking' =>'required',
-           'restroom' =>'required',
+     'type' => 'required',
             'phone_no' =>'required',
              'loc_lat' =>'required',
               'loc_lon' =>'required',
                'address' =>'required',
-                'preference' =>'required',
                 'price' =>'required',
                 'description' => 'required',
-                 'occupied' => 'required',
-                 'room_id' => 'required'
+                 'sold' => 'required',
+                 'jagga_id' => 'required',
+                 'user_id' => 'required',
 
      ] );
   if ($v->fails())
@@ -138,10 +96,10 @@
     }  
   } 
 
-  $room = Room::find($input['room_id']);
-  unset($input['room_id']);
+  $jagga = Jagga::find($input['jagga_id']);
+  unset($input['jagga_id']);
 
-  $room->where('id',$room->id)->update($input);
+  $jagga->where('id',$jagga->id)->update($input);
   
       return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.success') ) );
       }
@@ -169,14 +127,14 @@
         }  
       }
 
-      $data['path_to_save'] = base_path() . '/public/images/rooms/';   
+      $data['path_to_save'] = base_path() . '/public/images/jagga/';   
       $data['input_field_name'] = 'image';       
       $data['request'] = $request; 
 
       $images = app('App\Http\Controllers\Api\GalleryController')->saveImages($data);
 
       foreach($images as $image){   
-       DB::table('images')->insert(['room_id' => $id, 'image' => $image , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')]);
+       DB::table('images')->insert(['jagga_id' => $id, 'image' => $image , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')]);
              }  
   }
 
@@ -235,7 +193,28 @@
    }
   }
 
+  public function detail(Request $request){
+   $input = $request->all();
 
+   $details = array();
+   $v = \Validator::make($input,   [ 
+    'id' => 'required|numeric|exists:jaggas,id',                 
+    ] );
+   if ($v->fails())
+   {   
+    $msg = array();
+    $messages = $v->errors();           
+    foreach ($messages->all() as $message) {
+      return \Response::json(array(  'error' => true,  'message' => $message ) );
+    }  
+  }   
+  $details = Jagga::detail($input['id']);
+  if($details){
+    return \Response::json(array(  'error' => false,   'result' => $details  ) );
+  }else{
+    return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+  }
+  }
 
 
   public function uploadMultiplePhotos(Request $request){
@@ -285,7 +264,10 @@
       return array(  'error' => false,  'message' => $uploaded_image_path );  
   }
 
- 
+
+
+     
+
     public function changeStatus(Request $request){
       $input = $request->all();
       $uid = $input['user_id'];

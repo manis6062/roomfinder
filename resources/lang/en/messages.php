@@ -6,6 +6,8 @@ return [
 
     "invalid_access_token" => "Invalid access token",
 
+     "image_array" => "Please provide the array in image",
+    
 	"resultnotfound" 			=> "Result not found",
 
 	"success" 			=> "Success!",

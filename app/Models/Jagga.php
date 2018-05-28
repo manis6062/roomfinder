@@ -2,16 +2,15 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use DB;
-use App\Library\RoomFinderFunctions;
-use App\Models\Images;
+use App\Library\CarRentFunctions;
 use Log; 
-class Room extends Model
+class Jagga extends Model
 {  
-  protected $table = 'rooms';
+  protected $table = 'jaggas';
   protected $fillable = array( 
-    'user_id','type','no_of_floor' , 'no_of_room','parking','restroom',
-    'phone_no','loc_lat','loc_lon','address','preference',
-    'price' , 'kitchen' , 'image_id' , 'description' , 'occupied');
+    'user_id','type',
+    'phone_no','loc_lat','loc_lon','address',
+    'price' , 'description' , 'sold');
   public function user(){
     return $this->belongsTo('App\Models\User','user_id');
   }
@@ -530,7 +529,7 @@ $fields = "";
   foreach($cars as $car){
 
     
-    $car->distance = RoomFinderFunctions::getDistanceDifference(
+    $car->distance = CarRentFunctions::getDistanceDifference(
         [
           'source_lat' => $car->loc_lat,
           'source_lon' => $car->loc_lon,
@@ -577,23 +576,20 @@ $fields = "";
   return $final_car;
 }
 
+ public static function detail($jagga_id){        
+  $room_img_path = env("BASE_URL")."images/jaggas/full/";  
 
-
-
-public static function detail($room_id){        
-  $room_img_path = env("BASE_URL")."images/rooms/full/";  
-
-  $room = DB::table('rooms as r')
-            ->select('r.*', 'u.id as user_id')
-            ->leftJoin('users as u', 'u.id', '=', 'r.user_id')
-            ->where('r.id', '=' , $room_id)
+  $jagga = DB::table('jaggas as j')
+            ->select('j.*', 'u.id as user_id')
+            ->leftJoin('users as u', 'u.id', '=', 'j.user_id')
+            ->where('j.id', '=' , $jagga_id)
             ->get()->first(); 
 
-  if($room){
-      $images = Images::where('room_id' , 3)->get();
+  if($jagga){
+      $images = Images::where('jagga_id' , $jagga->id)->get();
       $full_path_image = $room_img_path . $images;
-      $room->images = $images;
-    return $room; 
+      $jagga->images = $images;
+    return $jagga; 
 }else{
   return false;
 }

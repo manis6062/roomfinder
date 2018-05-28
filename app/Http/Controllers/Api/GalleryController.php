@@ -28,20 +28,6 @@ class GalleryController extends Controller
         // resize
         //echo $original_image; die;
         $image_resize = new ImageResize($original_image );
-        
-       
-        /*if($width > 0 && $height > 0)
-        {
-            $image_resize->resize($width, $height); 
-        }
-        else if($width == 0 && $height > 0)
-        {
-            $image_resize->resizeToHeight($height);
-        }
-        else if($width > 0 && $height == 0) 
-        {
-            $image_resize->resizeToWidth($width);
-        }*/
          //for mid image
         $image_resize->crop(800, 600);
         $image_resize->save( $path_to_save.'mid/' . $new_name );
@@ -72,20 +58,6 @@ class GalleryController extends Controller
         // resize
         //echo $original_image; die;
         $image_resize = new ImageResize($original_image );
-        
-       
-        /*if($width > 0 && $height > 0)
-        {
-            $image_resize->resize($width, $height); 
-        }
-        else if($width == 0 && $height > 0)
-        {
-            $image_resize->resizeToHeight($height);
-        }
-        else if($width > 0 && $height == 0) 
-        {
-            $image_resize->resizeToWidth($width);
-        }*/
          //for mid image
         $image_resize->crop(800, 600);
         $image_resize->save( $path_to_save.'mid/' . $new_name );
@@ -118,20 +90,6 @@ class GalleryController extends Controller
             $origin_height = $origin_size[1];
             // resize
             $image_resize = new ImageResize($original_image );          
-           
-            /*if($width > 0 && $height > 0)
-            {
-                $image_resize->resize($width, $height); 
-            }
-            else if($width == 0 && $height > 0)
-            {
-                $image_resize->resizeToHeight($height);
-            }
-            else if($width > 0 && $height == 0) 
-            {
-                $image_resize->resizeToWidth($width);
-            }*/ 
-
         $image_resize->crop(800, 600);
         $image_resize->save( $data['path_to_save'].'mid/' . $new_name );
 

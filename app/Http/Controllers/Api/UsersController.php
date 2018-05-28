@@ -24,7 +24,7 @@ class UsersController extends Controller
 				'device_id' =>'required',	
 				'fb_device_token' => 'required',				
 				'email' =>'required',	
-				'profile_pic' =>'required',	
+				'profile_pic' =>'required|image',	
 				]);
 			if ($v->fails())
 			{	

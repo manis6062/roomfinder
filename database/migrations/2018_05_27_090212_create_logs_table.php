@@ -17,7 +17,7 @@ class CreateLogsTable extends Migration
             $table->increments('id');
              $table->integer('user_id')->unsigned();
          $table->foreign('user_id')->references('id')->on('users');
-         $table->string('loc_lat')->nullabale();
+         $table->string('loc_lat')->nullable();
         $table->string('loc_lon')->nullable();
         $table->string('device_type' , 50);
         $table->string('device_id' , 250);
