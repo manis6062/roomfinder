@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('profile_pic' , 300)->nullable();
             $table->string('email' , 50)->unique();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

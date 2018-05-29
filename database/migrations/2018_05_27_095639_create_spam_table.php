@@ -22,6 +22,7 @@ class CreateSpamTable extends Migration
          $table->integer('jagga_id')->unsigned();
          $table->foreign('jagga_id')->references('id')->on('jaggas');
         $table->enum('read', ['0', '1'])->default('0');
+                    $table->timestamp('deleted_at')->nullable();
                      $table->timestamps();
 
         });

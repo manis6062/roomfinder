@@ -47,7 +47,6 @@ Route::group(array('namespace' => 'Api' ), function() {
 	Route::post('cars/calender','CarsController@getCarCalender');
 	Route::post('cars/reapply-car-listing','CarsController@reapplyCarListing');
 	
-	Route::post('cars/delete','CarsController@deleteCar');
 
 	Route::post('vehicletype','VehicleTypeController@index');
 
@@ -87,6 +86,10 @@ Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api' )
       Route::post('room/update-room','RoomsController@updateRoom');
      Route::post('jagga/add','JaggasController@addJagga');
      Route::post('jagga/update-jagga','JaggasController@updateJagga');
+     	Route::post('room/delete','RoomsController@deleteRoom');
+     	Route::post('jagga/delete','JaggasController@deleteJagga');
+     	
+
 
 	
 	Route::post('users/update-card-information', 'UserCardController@save');

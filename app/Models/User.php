@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use DB;
+use Illuminate\Database\Eloquent\SoftDeletes; 
 
 
 class User extends Authenticatable
@@ -22,7 +23,8 @@ class User extends Authenticatable
      * @var array
 
      */
-
+    use SoftDeletes;
+  protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $fillable = [
 
     'first_name', 'last_name','email', 'password','profile_pic','email','status'

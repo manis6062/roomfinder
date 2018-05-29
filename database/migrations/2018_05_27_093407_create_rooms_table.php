@@ -31,6 +31,7 @@ class CreateRoomsTable extends Migration
             $table->double('price');
              $table->text('description');
              $table->boolean('occupied');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

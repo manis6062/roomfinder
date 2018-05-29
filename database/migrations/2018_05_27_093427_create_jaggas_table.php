@@ -25,6 +25,7 @@ class CreateJaggasTable extends Migration
             $table->double('price');
              $table->text('description');
              $table->boolean('sold');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

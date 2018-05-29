@@ -6,6 +6,7 @@
   use App\Library\RoomFinderFunctions;
   use App\Models\Jagga;
   use App\Models\User;
+  use App\Models\Images;
   use Lang,DB,Auth;
   class JaggasController extends Controller
   {
@@ -57,7 +58,7 @@
           if(count($request->image) > 1){
                $this->uploadMultipleImages($request , $jagga_id);
           }else{
-            $path_to_save = base_path() . '/public/images/jagga/';      
+            $path_to_save = base_path() . '/public/images/jaggas/';      
     $input_field_name = 'image';        
     $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$path_to_save,$input_field_name);
           DB::table('images')->insert(['jagga_id' => $jagga_id, 'image' => $image]);
@@ -97,11 +98,43 @@
   } 
 
   $jagga = Jagga::find($input['jagga_id']);
-  unset($input['jagga_id']);
+    $room_image_path = base_path() . '/public/images/jaggas/';
 
+  if($jagga){  
+     unset($input['jagga_id']);
+     unset($input['image']);
   $jagga->where('id',$jagga->id)->update($input);
-  
+   $images = Images::where('jagga_id' , $jagga->id);
+
+  if($request->image){
+    foreach ($images->get() as $key => $value) {
+    $full_path = $room_image_path.'full/'.$value->image;
+    $mid_path = $jagga_image_path.'mid/'.$value->image; 
+    $thumb_path = $jagga_image_path.'thumb/'.$value->image; 
+      @unlink($full_path);
+       @unlink($mid_path); 
+      @unlink($thumb_path); 
+    }
+    $delete = $images->delete();
+
+        if(count($request->image) > 1){
+               $this->uploadMultipleImages($request , $request->jagga_id);
+          }else{
+    $input_field_name = 'image';        
+    $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$room_image_path,$input_field_name);
+          DB::table('images')->insert(['jagga_id' => $request->jagga_id, 'image' => $image]);
+
+          }
+
+  }
+
+
       return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.success') ) );
+  }
+  else{
+    return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.invalid_room_id') ) );
+  }
+
       }
 
 
@@ -127,7 +160,7 @@
         }  
       }
 
-      $data['path_to_save'] = base_path() . '/public/images/jagga/';   
+      $data['path_to_save'] = base_path() . '/public/images/jaggas/';   
       $data['input_field_name'] = 'image';       
       $data['request'] = $request; 
 
@@ -138,6 +171,49 @@
              }  
   }
 
+
+     public function deleteJagga(Request $request){
+      $input = $request->all();
+      $v = \Validator::make($input,   [ 
+                //about
+       'user_id' => 'required|exists:users,id',    
+       'jagga_id' => 'required|numeric|exists:jaggas,id',
+       ] );        
+      if ($v->fails())
+      {   
+        $msg = array();
+        $messages = $v->errors();           
+        foreach ($messages->all() as $message) {
+          return \Response::json(array(  'error' => true,  'message' => $message ) );
+        }  
+      }
+      $jagga = Jagga::find($request->jagga_id);
+      $jagga_image_path = base_path() . '/public/images/jaggas/';   
+
+
+      if($jagga){
+              $jagga->delete();
+                 $images = Images::where('jagga_id' , $jagga->id);
+
+  if($images){
+    foreach ($images->get() as $key => $value) {
+    $full_path = $jagga_image_path.'full/'.$value->image;
+    $mid_path = $jagga_image_path.'mid/'.$value->image; 
+    $thumb_path = $jagga_image_path.'thumb/'.$value->image; 
+      @unlink($full_path);
+       @unlink($mid_path); 
+      @unlink($thumb_path); 
+    }
+    $delete = $images->delete();
+
+      return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.success') ) );
+    }
+      }else{
+         return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.invalid_jagga_id') ) );
+      }
+
+   
+}
 
 
     public function search(Request $request){
@@ -216,57 +292,7 @@
   }
   }
 
-
-  public function uploadMultiplePhotos(Request $request){
-      $input = $request->all();  
-      $user = User::find($input['user_id']);
-      $rules = [
-       'user_id' => 'required|exists:cars,user_id',
-       'car_id' => 'required|numeric|exists:cars,id', 
-
-      ];
-
-      $files = count($request->photo) - 1;
-
-      if(count($request->photo) == 0){
-        return array(  'error' => true,  'message' => Lang::get('messages.photo_is_required') ) ; 
-      }
-      foreach(range(0, $files) as $index) {
-          $rules['photo.' . $index] = 'required|image|max:5120';
-      }
-
-      $v = \Validator::make($input, $rules);        
-      if ($v->fails())
-      {   
-        $msg = array();
-        $messages = $v->errors();           
-        foreach ($messages->all() as $message) {
-          return array(  'error' => true,  'message' => $message );  
-        }  
-      }
-      $total_photos = DB::table('car_photos')->where('car_id',$input['car_id'])->count();
-      if($total_photos >= 16){
-        return array(  'error' => true,  'message' => Lang::get('messages.nomorephotos') ) ; 
-      }
-    
-      $data['car_id'] = $input['car_id'];
-
-      $data['path_to_save'] = base_path() . '/images/cars/';    
-      $data['input_field_name'] = 'photo';       
-      $data['request'] = $request; 
-
-      $images = app('App\Http\Controllers\Api\V1\GalleryController')->saveImages($data);         
-      foreach($images as $image){   
- DB::table('car_photos')->insert(['car_id' => $data['car_id'], 'temp_photo' => $image , 'photo_approved' =>'n' ]);
-             }
-      $uploaded_image_path = env("BASE_URL")."images/cars/full/".$images[0];
-      
-      return array(  'error' => false,  'message' => $uploaded_image_path );  
-  }
-
-
-
-     
+ 
 
     public function changeStatus(Request $request){
       $input = $request->all();

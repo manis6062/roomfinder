@@ -5,8 +5,13 @@ use DB;
 use App\Library\RoomFinderFunctions;
 use App\Models\Images;
 use Log; 
+use Illuminate\Database\Eloquent\SoftDeletes; 
 class Room extends Model
 {  
+
+   use SoftDeletes;
+  protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
   protected $table = 'rooms';
   protected $fillable = array( 
     'user_id','type','no_of_floor' , 'no_of_room','parking','restroom',
