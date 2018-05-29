@@ -1,43 +1,223 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "L5 Swagger API",
-        "description": "L5 Swagger API description",
+        "title": "RoomFinder",
+        "description": "RoomFinder API description",
         "contact": {
-            "email": "darius@matulionis.lt"
+            "email": "manis6062@gmail.com"
         },
         "version": "1.0.0"
     },
-    "host": "http://my-default-host.com",
-    "basePath": "/api/v1",
+    "host": "127.0.0.1:8000",
+    "basePath": "/api",
     "schemes": [
         "http",
         "https"
     ],
     "paths": {
-        "/customer/{customerId}/rate": {
-            "get": {
-                "summary": "List customer rates",
-                "operationId": "getCustomerRates",
+        "/room/add": {
+            "post": {
+                "summary": "Add Room",
+                "operationId": "addRoom",
                 "parameters": [
                     {
-                        "name": "customerId",
-                        "in": "path",
-                        "description": "Target customer.",
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "User Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filter results based on query string value.",
-                        "required": false,
-                        "type": "string",
-                        "enum": [
-                            "active",
-                            "expired",
-                            "scheduled"
-                        ]
+                        "name": "type",
+                        "in": "formData",
+                        "description": "Type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "no_of_floor",
+                        "in": "formData",
+                        "description": "Number of rooms",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "no_of_room",
+                        "in": "formData",
+                        "description": "Number of floors",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "kitchen",
+                        "in": "formData",
+                        "description": "Kitchen",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "parking",
+                        "in": "formData",
+                        "description": "Parking",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "restroom",
+                        "in": "formData",
+                        "description": "Restroom",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone_no",
+                        "in": "formData",
+                        "description": "Phone no.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "loc_lat",
+                        "in": "formData",
+                        "description": " Location - Longitude",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "loc_lon",
+                        "in": "formData",
+                        "description": "Location - Latitude",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "Address",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "Room Image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "preference",
+                        "in": "formData",
+                        "description": "Preference",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "Price",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "Description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "occupied",
+                        "in": "formData",
+                        "description": "Occupied",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/users/fblogin": {
+            "post": {
+                "summary": "Facebook Login",
+                "operationId": "fblogin",
+                "parameters": [
+                    {
+                        "name": "device_type",
+                        "in": "formData",
+                        "description": "Device Type.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "device_id",
+                        "in": "formData",
+                        "description": "Device ID.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fb_device_token",
+                        "in": "formData",
+                        "description": "Facebook Access Token.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Email Address",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "profile_pic",
+                        "in": "formData",
+                        "description": "Device ID.",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "post": {
+                "summary": "Users Logout Login",
+                "operationId": "logout",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access token",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "responses": {

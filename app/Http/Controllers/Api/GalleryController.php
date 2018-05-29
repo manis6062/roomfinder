@@ -9,7 +9,7 @@ use \Eventviva\ImageResize;
 
 class GalleryController extends Controller
 {
-    public static function saveImage(Request $request,$path_to_save,$input_field_name,$width=400,$height = 300)
+    public static function saveProfileImage(Request $request,$path_to_save,$input_field_name,$width=400,$height = 300)
     {  
         ini_set('memory_limit','256M');
      

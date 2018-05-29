@@ -12,23 +12,19 @@ class Controller extends BaseController
 
        /**
  * @SWG\Swagger(
- *     basePath="/api/v1",
+ *     basePath="/api",
  *     schemes={"http", "https"},
  *     host=L5_SWAGGER_CONST_HOST,
  *     @SWG\Info(
  *         version="1.0.0",
- *         title="L5 Swagger API",
- *         description="L5 Swagger API description",
+ *         title="RoomFinder",
+ *         description="RoomFinder API description",
  *         @SWG\Contact(
- *             email="darius@matulionis.lt"
+ *             email="manis6062@gmail.com"
  *         ),
  *     )
  * )
  */
-
-       
-
-
 
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
