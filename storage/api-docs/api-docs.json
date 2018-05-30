@@ -8,7 +8,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "http://my-default-host.com",
+    "host": "127.0.0.1:8000",
     "basePath": "/api",
     "schemes": [
         "http",
@@ -70,9 +70,9 @@
                         "type": "string"
                     },
                     {
-                        "name": "image",
+                        "name": "image[]",
                         "in": "formData",
-                        "description": "Room Image",
+                        "description": "Jagga Image",
                         "required": true,
                         "type": "file"
                     },
@@ -93,7 +93,7 @@
                     {
                         "name": "sold",
                         "in": "formData",
-                        "description": "Sold",
+                        "description": "(0 for unsold or 1 for sold)",
                         "required": true,
                         "type": "string"
                     }
@@ -400,16 +400,9 @@
                     {
                         "name": "occupied",
                         "in": "formData",
-                        "description": "Occupied",
+                        "description": "0 for occupied or 1 for not occupied",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "name": "Accept",
-                        "in": "path",
-                        "description": "Response content type, could be used to return json response for a xml request",
-                        "type": "string",
-                        "enum": "['abc' , 'sdfsdf' , 'sdfsdfs']"
                     }
                 ],
                 "responses": {
@@ -644,7 +637,7 @@
                     {
                         "name": "device_type",
                         "in": "formData",
-                        "description": "Device Type.",
+                        "description": "Device Type. (ios or android)",
                         "required": true,
                         "type": "string"
                     },
@@ -672,7 +665,7 @@
                     {
                         "name": "profile_pic",
                         "in": "formData",
-                        "description": "Device ID.",
+                        "description": "Profile Pic .",
                         "required": true,
                         "type": "file"
                     }

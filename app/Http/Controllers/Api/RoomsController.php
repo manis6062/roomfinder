@@ -132,16 +132,9 @@
      *   @SWG\Parameter(
  *     name="occupied",
  *     in="formData",
- *     description="Occupied",
+ *     description="(0 for occupied or 1 for not occupied)",
  *     required=true,
  *     type="string",
- *   ),
-  *     @SWG\Parameter(
- *      name="Accept",
- *      description="Response content type, could be used to return json response for a xml request",
- *      type="string",
-  *     in="path",
-  *     enum="['abc' , 'sdfsdf' , 'sdfsdfs']"
  *   ),
  *   @SWG\Response(response=200, description="successful operation"),
  *   @SWG\Response(response=406, description="not acceptable"),
@@ -390,7 +383,7 @@
      *   @SWG\Parameter(
  *     name="occupied",
  *     in="formData",
- *     description="Occupied",
+ *     description="(0 for occupied or 1 for not occupied)",
  *     required=true,
  *     type="string"
  *   ),

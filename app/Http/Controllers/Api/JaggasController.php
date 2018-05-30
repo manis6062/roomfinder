@@ -67,9 +67,9 @@
  *     type="string"
  *   ),
     *   @SWG\Parameter(
- *     name="image",
+ *     name="image[]",
  *     in="formData",
- *     description="Room Image",
+ *     description="Jagga Image",
  *     required=true,
  *     type="file",
  *   ),
@@ -90,7 +90,7 @@
      *   @SWG\Parameter(
  *     name="sold",
  *     in="formData",
- *     description="Sold",
+ *     description="(0 for unsold or 1 for sold)",
  *     required=true,
  *     type="string"
  *   ),
@@ -238,7 +238,7 @@
      *   @SWG\Parameter(
  *     name="description",
  *     in="formData",
- *     description="Description",
+ *     description="(0 for unsold or 1 for sold)",
  *     required=true,
  *     type="string"
  *   ),

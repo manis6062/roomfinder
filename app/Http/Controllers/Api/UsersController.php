@@ -23,7 +23,7 @@ class UsersController extends Controller
  *   @SWG\Parameter(
  *     name="device_type",
  *     in="formData",
- *     description="Device Type.",
+ *     description="Device Type. (ios or android)",
  *     required=true,
  *     type="string"
  *   ),
@@ -51,7 +51,7 @@ class UsersController extends Controller
   *   @SWG\Parameter(
  *     name="profile_pic",
  *     in="formData",
- *     description="Device ID.",
+ *     description="Profile Pic .",
  *     required=true,
  *     type="file"
  *   ),
@@ -75,7 +75,7 @@ class UsersController extends Controller
 				'device_id' =>'required',	
 				'fb_device_token' => 'required',				
 				'email' =>'required',	
-				'profile_pic' =>'required|image',	
+				'profile_pic' =>'required|image|max:500000',	
 				]);
 			if ($v->fails())
 			{	
