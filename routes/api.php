@@ -22,8 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 # the api routes version 1
 Route::group(array('namespace' => 'Api' ), function() {
 	Route::post('users/fblogin', 'UsersController@fblogin');
-	Route::post('room/detail','RoomsController@detail');
-	Route::post('jagga/detail','JaggasController@detail');
+	Route::post('room/detail','RoomsController@rdetail');
+	Route::post('jagga/detail','JaggasController@jdetail');
 
 });
 

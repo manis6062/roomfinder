@@ -134,7 +134,14 @@
  *     in="formData",
  *     description="Occupied",
  *     required=true,
- *     type="string"
+ *     type="string",
+ *   ),
+  *     @SWG\Parameter(
+ *      name="Accept",
+ *      description="Response content type, could be used to return json response for a xml request",
+ *      type="string",
+  *     in="path",
+  *     enum="['abc' , 'sdfsdf' , 'sdfsdfs']"
  *   ),
  *   @SWG\Response(response=200, description="successful operation"),
  *   @SWG\Response(response=406, description="not acceptable"),
@@ -142,6 +149,8 @@
  * )
  *
  */
+
+
 
        public function addRoom(Request $request){
         $input = $request->all();
@@ -211,9 +220,26 @@
          return \Response::json(array(  'error' => false,  'room_id' => $room_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
        }
 
+      /**
+ * @SWG\Post(
+ *   path="room/detail",
+ *   summary="Room Detail",
+ *   operationId="rdetail",
+  *   @SWG\Parameter(
+ *     name="id",
+ *     in="formData",
+ *     description="Room Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */ 
 
-
-         public function detail(Request $request){
+         public function rdetail(Request $request){
    $input = $request->all();
 
    $details = array();
@@ -235,6 +261,145 @@
     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
   }
   }
+
+
+  /**
+ * @SWG\Post(
+ *   path="room/update-room",
+ *   summary="Update Room",
+ *   operationId="updateRoom",
+ *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="room_id",
+ *     in="formData",
+ *     description="Room Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="type",
+ *     in="formData",
+ *     description="Type",
+ *     required=true,
+ *     type="string"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="no_of_floor",
+ *     in="formData",
+ *     description="Number of rooms",
+ *     required=true,
+ *     type="string"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="no_of_room",
+ *     in="formData",
+ *     description="Number of floors",
+ *     required=true,
+ *     type="string",
+ *   ),
+  *   @SWG\Parameter(
+ *     name="kitchen",
+ *     in="formData",
+ *     description="Kitchen",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="parking",
+ *     in="formData",
+ *     description="Parking",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="restroom",
+ *     in="formData",
+ *     description="Restroom",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="phone_no",
+ *     in="formData",
+ *     description="Phone no.",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lat",
+ *     in="formData",
+ *     description=" Location - Longitude",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lon",
+ *     in="formData",
+ *     description="Location - Latitude",
+ *     required=true,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="address",
+ *     in="formData",
+ *     description="Address",
+ *     required=true,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="image",
+ *     in="formData",
+ *     description="Room Image",
+ *     required=true,
+ *     type="file",
+ *   ),
+    *   @SWG\Parameter(
+ *     name="preference",
+ *     in="formData",
+ *     description="Preference",
+ *     required=true,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="price",
+ *     in="formData",
+ *     description="Price",
+ *     required=true,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="description",
+ *     in="formData",
+ *     description="Description",
+ *     required=true,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="occupied",
+ *     in="formData",
+ *     description="Occupied",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */
 
 
          public function updateRoom(Request $request){
@@ -346,6 +511,39 @@
              }  
   }
 
+
+     /**
+ * @SWG\Post(
+ *   path="room/delete",
+ *   summary="Delete Room",
+ *   operationId="deleteRoom",
+ *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="room_id",
+ *     in="formData",
+ *     description="Room Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */
 
      public function deleteRoom(Request $request){
       $input = $request->all();

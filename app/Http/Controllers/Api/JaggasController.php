@@ -12,6 +12,96 @@
   {
 
 
+    /**
+ * @SWG\Post(
+ *   path="/jagga/add",
+ *   summary="Add Jagga",
+ *   operationId="addJagga",
+ *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="type",
+ *     in="formData",
+ *     description="Type",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="phone_no",
+ *     in="formData",
+ *     description="Phone no.",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lat",
+ *     in="formData",
+ *     description=" Location - Longitude",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lon",
+ *     in="formData",
+ *     description="Location - Latitude",
+ *     required=true,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="address",
+ *     in="formData",
+ *     description="Address",
+ *     required=true,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="image",
+ *     in="formData",
+ *     description="Room Image",
+ *     required=true,
+ *     type="file",
+ *   ),
+    *   @SWG\Parameter(
+ *     name="price",
+ *     in="formData",
+ *     description="Price",
+ *     required=true,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="description",
+ *     in="formData",
+ *     description="Description",
+ *     required=true,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="sold",
+ *     in="formData",
+ *     description="Sold",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */
+
+
        public function addJagga(Request $request){
         $input = $request->all();
         $details = array();
@@ -67,6 +157,104 @@
          
          return \Response::json(array(  'error' => false,  'jagga_id' => $jagga_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
        }
+
+
+
+       /**
+ * @SWG\Post(
+ *   path="jagga/update-jagga",
+ *   summary="Update Jagga",
+ *   operationId="updateJagga",
+ *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="jagga_id",
+ *     in="formData",
+ *     description="Jagga Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="type",
+ *     in="formData",
+ *     description="Type",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="phone_no",
+ *     in="formData",
+ *     description="Phone no.",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lat",
+ *     in="formData",
+ *     description=" Location - Longitude",
+ *     required=true,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lon",
+ *     in="formData",
+ *     description="Location - Latitude",
+ *     required=true,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="address",
+ *     in="formData",
+ *     description="Address",
+ *     required=true,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="image",
+ *     in="formData",
+ *     description="Room Image",
+ *     required=true,
+ *     type="file",
+ *   ),
+    *   @SWG\Parameter(
+ *     name="price",
+ *     in="formData",
+ *     description="Price",
+ *     required=true,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="description",
+ *     in="formData",
+ *     description="Description",
+ *     required=true,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="sold",
+ *     in="formData",
+ *     description="Sold",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */  
 
 
 
@@ -172,6 +360,40 @@
   }
 
 
+
+       /**
+ * @SWG\Post(
+ *   path="jagga/delete",
+ *   summary="Delete Jagga",
+ *   operationId="deleteJagga",
+ *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="jagga_id",
+ *     in="formData",
+ *     description="Jagga Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */  
+
      public function deleteJagga(Request $request){
       $input = $request->all();
       $v = \Validator::make($input,   [ 
@@ -216,9 +438,26 @@
 }
 
 
-   
+      /**
+ * @SWG\Post(
+ *   path="jagga/detail",
+ *   summary="Jagga Detail",
+ *   operationId="jdetail",
+  *   @SWG\Parameter(
+ *     name="id",
+ *     in="formData",
+ *     description="Jagga Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */    
 
-  public function detail(Request $request){
+  public function jdetail(Request $request){
    $input = $request->all();
 
    $details = array();
