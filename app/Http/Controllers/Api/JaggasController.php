@@ -162,7 +162,7 @@
 
        /**
  * @SWG\Post(
- *   path="jagga/update-jagga",
+ *   path="/jagga/update-jagga",
  *   summary="Update Jagga",
  *   operationId="updateJagga",
  *   @SWG\Parameter(
@@ -363,7 +363,7 @@
 
        /**
  * @SWG\Post(
- *   path="jagga/delete",
+ *   path="/jagga/delete",
  *   summary="Delete Jagga",
  *   operationId="deleteJagga",
  *   @SWG\Parameter(
@@ -440,7 +440,7 @@
 
       /**
  * @SWG\Post(
- *   path="jagga/detail",
+ *   path="/jagga/detail",
  *   summary="Jagga Detail",
  *   operationId="jdetail",
   *   @SWG\Parameter(

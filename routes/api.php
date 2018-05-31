@@ -24,6 +24,7 @@ Route::group(array('namespace' => 'Api' ), function() {
 	Route::post('users/fblogin', 'UsersController@fblogin');
 	Route::post('room/detail','RoomsController@rdetail');
 	Route::post('jagga/detail','JaggasController@jdetail');
+	Route::post('room/search','RoomsController@search');
 
 });
 

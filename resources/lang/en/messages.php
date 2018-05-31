@@ -4,7 +4,7 @@
 
 return [
 
-    "invalid_access_token" => "Invalid access token",
+    "invalid_access_token" => "Invalid access token / User Id",
 
      "image_array" => "Please provide the array in image",
 

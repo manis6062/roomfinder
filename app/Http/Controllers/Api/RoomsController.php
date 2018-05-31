@@ -85,14 +85,14 @@
  *     in="formData",
  *     description=" Location - Longitude",
  *     required=true,
- *     type="string"
+ *     type="integer"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lon",
  *     in="formData",
  *     description="Location - Latitude",
  *     required=true,
- *     type="string"
+ *     type="integer"
  *   ),
     *   @SWG\Parameter(
  *     name="address",
@@ -102,7 +102,7 @@
  *     type="string"
  *   ),
     *   @SWG\Parameter(
- *     name="image",
+ *     name="image[]",
  *     in="formData",
  *     description="Room Image",
  *     required=true,
@@ -215,7 +215,7 @@
 
       /**
  * @SWG\Post(
- *   path="room/detail",
+ *   path="/room/detail",
  *   summary="Room Detail",
  *   operationId="rdetail",
   *   @SWG\Parameter(
@@ -256,9 +256,175 @@
   }
 
 
+         /**
+ * @SWG\Post(
+ *   path="/room/search",
+ *   summary="Room Search",
+ *   operationId="search",
+  *   @SWG\Parameter(
+ *     name="per_page",
+ *     in="formData",
+ *     description="Rooms Per Page",
+ *     required=false,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="page_number",
+ *     in="formData",
+ *     description="Per Page Number",
+ *     required=false,
+ *     type="integer"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=false,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="type",
+ *     in="formData",
+ *     description="Type",
+ *     required=false,
+ *     type="string"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="no_of_floor",
+ *     in="formData",
+ *     description="Number of rooms",
+ *     required=false,
+ *     type="string"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="no_of_room",
+ *     in="formData",
+ *     description="Number of floors",
+ *     required=false,
+ *     type="string",
+ *   ),
+  *   @SWG\Parameter(
+ *     name="kitchen",
+ *     in="formData",
+ *     description="Kitchen",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="parking",
+ *     in="formData",
+ *     description="Parking",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="restroom",
+ *     in="formData",
+ *     description="Restroom",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="phone_no",
+ *     in="formData",
+ *     description="Phone no.",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lat",
+ *     in="formData",
+ *     description=" Location - Longitude",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lon",
+ *     in="formData",
+ *     description="Location - Latitude",
+ *     required=false,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="address",
+ *     in="formData",
+ *     description="Address",
+ *     required=false,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="preference",
+ *     in="formData",
+ *     description="Preference",
+ *     required=false,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="high_price",
+ *     in="formData",
+ *     description="High Price",
+ *     required=false,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="low_price",
+ *     in="formData",
+ *     description="Low Price",
+ *     required=false,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="occupied",
+ *     in="formData",
+ *     description="(0 for occupied or 1 for not occupied)",
+ *     required=false,
+ *     type="string"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */       
+
+    public function search(Request $request){
+     $input = $request->all();     
+     $v = \Validator::make($input,[    
+      'per_page' =>'numeric',
+      'page_number' =>'numeric',
+      "user_id" => 'numeric',
+      "no_of_floor" => 'numeric',
+      'sold'=>'numeric',
+      'high_price'=>'numeric',
+      'low_price'=>'numeric'
+      ]);
+     if ($v->fails())
+     {   
+      $msg = array();
+      $messages = $v->errors();           
+      foreach ($messages->all() as $message) {
+        return \Response::json(array(  'error' => true,  'message' => $message ) );
+      }               
+
+    }  
+
+      $result = Room::search($input);  
+    //$result = Car::searchAndroid($input);
+    if($result){
+      if(!isset($input['page_number'])){
+        $input['page_number'] = 1;
+      }
+      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+    }else{
+                  //echo "jere"; die;
+     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+   }
+  }
+
+
   /**
  * @SWG\Post(
- *   path="room/update-room",
+ *   path="/room/update-room",
  *   summary="Update Room",
  *   operationId="updateRoom",
  *   @SWG\Parameter(
@@ -507,7 +673,7 @@
 
      /**
  * @SWG\Post(
- *   path="room/delete",
+ *   path="/room/delete",
  *   summary="Delete Room",
  *   operationId="deleteRoom",
  *   @SWG\Parameter(

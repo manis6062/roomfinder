@@ -111,7 +111,7 @@
                 }
             }
         },
-        "jagga/update-jagga": {
+        "/jagga/update-jagga": {
             "post": {
                 "summary": "Update Jagga",
                 "operationId": "updateJagga",
@@ -189,7 +189,7 @@
                     {
                         "name": "description",
                         "in": "formData",
-                        "description": "Description",
+                        "description": "(0 for unsold or 1 for sold)",
                         "required": true,
                         "type": "string"
                     },
@@ -214,7 +214,7 @@
                 }
             }
         },
-        "jagga/delete": {
+        "/jagga/delete": {
             "post": {
                 "summary": "Delete Jagga",
                 "operationId": "deleteJagga",
@@ -254,7 +254,7 @@
                 }
             }
         },
-        "jagga/detail": {
+        "/jagga/detail": {
             "post": {
                 "summary": "Jagga Detail",
                 "operationId": "jdetail",
@@ -353,14 +353,14 @@
                         "in": "formData",
                         "description": " Location - Longitude",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "loc_lon",
                         "in": "formData",
                         "description": "Location - Latitude",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "address",
@@ -370,7 +370,7 @@
                         "type": "string"
                     },
                     {
-                        "name": "image",
+                        "name": "image[]",
                         "in": "formData",
                         "description": "Room Image",
                         "required": true,
@@ -400,7 +400,7 @@
                     {
                         "name": "occupied",
                         "in": "formData",
-                        "description": "0 for occupied or 1 for not occupied",
+                        "description": "(0 for occupied or 1 for not occupied)",
                         "required": true,
                         "type": "string"
                     }
@@ -418,7 +418,7 @@
                 }
             }
         },
-        "room/detail": {
+        "/room/detail": {
             "post": {
                 "summary": "Room Detail",
                 "operationId": "rdetail",
@@ -444,7 +444,145 @@
                 }
             }
         },
-        "room/update-room": {
+        "/room/search": {
+            "post": {
+                "summary": "Room Search",
+                "operationId": "search",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "formData",
+                        "description": "Rooms Per Page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "formData",
+                        "description": "Per Page Number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "User Id",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "type",
+                        "in": "formData",
+                        "description": "Type",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "no_of_floor",
+                        "in": "formData",
+                        "description": "Number of rooms",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "no_of_room",
+                        "in": "formData",
+                        "description": "Number of floors",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "kitchen",
+                        "in": "formData",
+                        "description": "Kitchen",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "parking",
+                        "in": "formData",
+                        "description": "Parking",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "restroom",
+                        "in": "formData",
+                        "description": "Restroom",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone_no",
+                        "in": "formData",
+                        "description": "Phone no.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "loc_lat",
+                        "in": "formData",
+                        "description": " Location - Longitude",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "loc_lon",
+                        "in": "formData",
+                        "description": "Location - Latitude",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "Address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "preference",
+                        "in": "formData",
+                        "description": "Preference",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "high_price",
+                        "in": "formData",
+                        "description": "High Price",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "low_price",
+                        "in": "formData",
+                        "description": "Low Price",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "occupied",
+                        "in": "formData",
+                        "description": "(0 for occupied or 1 for not occupied)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/room/update-room": {
             "post": {
                 "summary": "Update Room",
                 "operationId": "updateRoom",
@@ -571,7 +709,7 @@
                     {
                         "name": "occupied",
                         "in": "formData",
-                        "description": "Occupied",
+                        "description": "(0 for occupied or 1 for not occupied)",
                         "required": true,
                         "type": "string"
                     }
@@ -589,7 +727,7 @@
                 }
             }
         },
-        "room/delete": {
+        "/room/delete": {
             "post": {
                 "summary": "Delete Room",
                 "operationId": "deleteRoom",
