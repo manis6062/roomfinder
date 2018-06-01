@@ -98,10 +98,6 @@ public static function search($data){
     $param[] = $data['preference'];
   }
 
-                   if(isset($data['price'])){
-    $cond.= " and r.price = ?";
-    $param[] = $data['price'];
-  }
 
                      if(isset($data['description'])){
     $cond.= " and r.description = ?";
@@ -138,10 +134,14 @@ public static function search($data){
 
         $images = Images::where('room_id' , $room->id)->get();
 
+
+      $room_image = array();
       foreach ($images as $key => $value) {
-      $room_image[$key] = url('/public/images/room/full') . '/' . $value->image;
-      $room->image = $room_image;
+      $room_image[$key] = url('/public/images/rooms/full') . '/' . $value->image;
+     
         }
+         $room->image[] = $room_image;
+
 
    }
 

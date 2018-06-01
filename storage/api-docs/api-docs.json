@@ -8,7 +8,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "127.0.0.1:8000",
+    "host": "http://my-default-host.com",
     "basePath": "/api",
     "schemes": [
         "http",
@@ -111,8 +111,104 @@
                 }
             }
         },
+        "/jagga/search-jagga": {
+            "get": {
+                "summary": "Search Jagga",
+                "operationId": "searchJagga",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "User Id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "type",
+                        "in": "formData",
+                        "description": "Type",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone_no",
+                        "in": "formData",
+                        "description": "Phone no.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "loc_lat",
+                        "in": "formData",
+                        "description": " Location - Longitude",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "loc_lon",
+                        "in": "formData",
+                        "description": "Location - Latitude",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "Address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "Room Image",
+                        "required": false,
+                        "type": "file"
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "Price",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "Description",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sold",
+                        "in": "formData",
+                        "description": "(0 for unsold or 1 for sold)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
         "/jagga/update-jagga": {
-            "post": {
+            "patch": {
                 "summary": "Update Jagga",
                 "operationId": "updateJagga",
                 "parameters": [
@@ -141,28 +237,28 @@
                         "name": "type",
                         "in": "formData",
                         "description": "Type",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     },
                     {
                         "name": "phone_no",
                         "in": "formData",
                         "description": "Phone no.",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lat",
                         "in": "formData",
                         "description": " Location - Longitude",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lon",
                         "in": "formData",
                         "description": "Location - Latitude",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     },
                     {
@@ -176,28 +272,28 @@
                         "name": "image",
                         "in": "formData",
                         "description": "Room Image",
-                        "required": true,
+                        "required": false,
                         "type": "file"
                     },
                     {
                         "name": "price",
                         "in": "formData",
                         "description": "Price",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     },
                     {
                         "name": "description",
                         "in": "formData",
                         "description": "(0 for unsold or 1 for sold)",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     },
                     {
                         "name": "sold",
                         "in": "formData",
                         "description": "Sold",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -215,7 +311,7 @@
             }
         },
         "/jagga/delete": {
-            "post": {
+            "delete": {
                 "summary": "Delete Jagga",
                 "operationId": "deleteJagga",
                 "parameters": [
@@ -255,7 +351,7 @@
             }
         },
         "/jagga/detail": {
-            "post": {
+            "get": {
                 "summary": "Jagga Detail",
                 "operationId": "jdetail",
                 "parameters": [
@@ -419,7 +515,7 @@
             }
         },
         "/room/detail": {
-            "post": {
+            "get": {
                 "summary": "Room Detail",
                 "operationId": "rdetail",
                 "parameters": [
@@ -444,10 +540,10 @@
                 }
             }
         },
-        "/room/search": {
-            "post": {
+        "/room/search-room": {
+            "get": {
                 "summary": "Room Search",
-                "operationId": "search",
+                "operationId": "searchRoom",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -582,8 +678,55 @@
                 }
             }
         },
+        "/room/myRooms": {
+            "get": {
+                "summary": "My Rooms",
+                "operationId": "myRooms",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "formData",
+                        "description": "Rooms Per Page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "formData",
+                        "description": "Per Page Number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "User Id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
         "/room/update-room": {
-            "post": {
+            "patch": {
                 "summary": "Update Room",
                 "operationId": "updateRoom",
                 "parameters": [
@@ -728,7 +871,7 @@
             }
         },
         "/room/delete": {
-            "post": {
+            "delete": {
                 "summary": "Delete Room",
                 "operationId": "deleteRoom",
                 "parameters": [

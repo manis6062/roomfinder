@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers\Api;
+<?php namespace App\Http\Controllers\Api\V1;
+
   use Illuminate\Http\Request;
 
   use App\Http\Requests;
@@ -110,13 +111,13 @@
          'user_id' => 'required|numeric|exists:users,id', 
          'type' => 'required',
             'phone_no' =>'required',
-             'loc_lat' =>'required',
-              'loc_lon' =>'required',
+             'loc_lat' =>'required|numeric',
+              'loc_lon' =>'required|numeric',
                'address' =>'required',
-                'price' =>'required',
+                'price' =>'required|numeric',
                 'description' => 'required',
-                 'sold' => 'required',
-                 'image' =>'required',
+                 'sold' => 'required|numeric',
+                 'image' =>'required|max:50000',
          ] );        
         if ($v->fails())
         {   
@@ -150,7 +151,7 @@
           }else{
             $path_to_save = base_path() . '/public/images/jaggas/';      
     $input_field_name = 'image';        
-    $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$path_to_save,$input_field_name);
+    $image = app('App\Http\Controllers\Api\V1\GalleryController')->saveSingleImage($request,$path_to_save,$input_field_name);
           DB::table('images')->insert(['jagga_id' => $jagga_id, 'image' => $image]);
 
           }
@@ -160,8 +161,141 @@
 
 
 
+
+
+  /**
+ * @SWG\Get(
+ *   path="/jagga/search-jagga",
+ *   summary="Search Jagga",
+ *   operationId="searchJagga",
+ *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="type",
+ *     in="formData",
+ *     description="Type",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="phone_no",
+ *     in="formData",
+ *     description="Phone no.",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lat",
+ *     in="formData",
+ *     description=" Location - Longitude",
+ *     required=false,
+ *     type="string"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="loc_lon",
+ *     in="formData",
+ *     description="Location - Latitude",
+ *     required=false,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="address",
+ *     in="formData",
+ *     description="Address",
+ *     required=false,
+ *     type="string"
+ *   ),
+    *   @SWG\Parameter(
+ *     name="image",
+ *     in="formData",
+ *     description="Room Image",
+ *     required=false,
+ *     type="file",
+ *   ),
+    *   @SWG\Parameter(
+ *     name="price",
+ *     in="formData",
+ *     description="Price",
+ *     required=false,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="description",
+ *     in="formData",
+ *     description="Description",
+ *     required=false,
+ *     type="string"
+ *   ),
+     *   @SWG\Parameter(
+ *     name="sold",
+ *     in="formData",
+ *     description="(0 for unsold or 1 for sold)",
+ *     required=false,
+ *     type="string"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */
+
+
+    public function searchJagga(Request $request){
+     $input = $request->all();     
+     $v = \Validator::make($input,[    
+      'per_page' =>'numeric',
+      'page_number' =>'numeric',
+      "user_id" => 'numeric',
+      'sold'=>'numeric',
+      'high_price'=>'numeric',
+      'low_price'=>'numeric'
+      ]);
+     if ($v->fails())
+     {   
+      $msg = array();
+      $messages = $v->errors();           
+      foreach ($messages->all() as $message) {
+        return \Response::json(array(  'error' => true,  'message' => $message ) );
+      }               
+
+    }  
+
+      $result = Jagga::search($input);  
+    //$result = Car::searchAndroid($input);
+    if($result){
+      if(!isset($input['page_number'])){
+        $input['page_number'] = 1;
+      }
+      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+    }else{
+                  //echo "jere"; die;
+     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+   }
+  }
+
+
+
+
+
+
+
+
+
        /**
- * @SWG\Post(
+ * @SWG\Patch(
  *   path="/jagga/update-jagga",
  *   summary="Update Jagga",
  *   operationId="updateJagga",
@@ -190,28 +324,28 @@
  *     name="type",
  *     in="formData",
  *     description="Type",
- *     required=true,
+ *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="phone_no",
  *     in="formData",
  *     description="Phone no.",
- *     required=true,
+ *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lat",
  *     in="formData",
  *     description=" Location - Longitude",
- *     required=true,
+ *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lon",
  *     in="formData",
  *     description="Location - Latitude",
- *     required=true,
+ *     required=false,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
@@ -225,28 +359,28 @@
  *     name="image",
  *     in="formData",
  *     description="Room Image",
- *     required=true,
+ *     required=false,
  *     type="file",
  *   ),
     *   @SWG\Parameter(
  *     name="price",
  *     in="formData",
  *     description="Price",
- *     required=true,
+ *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="description",
  *     in="formData",
  *     description="(0 for unsold or 1 for sold)",
- *     required=true,
+ *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="sold",
  *     in="formData",
  *     description="Sold",
- *     required=true,
+ *     required=false,
  *     type="string"
  *   ),
  *   @SWG\Response(response=200, description="successful operation"),
@@ -265,15 +399,13 @@
     $v = \Validator::make($input,   [ 
                 //about
      'type' => 'required',
-            'phone_no' =>'required',
-             'loc_lat' =>'required',
-              'loc_lon' =>'required',
-               'address' =>'required',
-                'price' =>'required',
-                'description' => 'required',
-                 'sold' => 'required',
-                 'jagga_id' => 'required',
-                 'user_id' => 'required',
+            'phone_no' =>'numeric',
+             'loc_lat' =>'numeric',
+              'loc_lon' =>'numeric',
+                'price' =>'numeric',
+                 'sold' => 'numeric',
+                 'jagga_id' => 'numeric',
+                 'user_id' => 'numeric',
 
      ] );
   if ($v->fails())
@@ -309,7 +441,7 @@
                $this->uploadMultipleImages($request , $request->jagga_id);
           }else{
     $input_field_name = 'image';        
-    $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$room_image_path,$input_field_name);
+    $image = app('App\Http\Controllers\Api\V1\GalleryController')->saveSingleImage($request,$room_image_path,$input_field_name);
           DB::table('images')->insert(['jagga_id' => $request->jagga_id, 'image' => $image]);
 
           }
@@ -352,7 +484,7 @@
       $data['input_field_name'] = 'image';       
       $data['request'] = $request; 
 
-      $images = app('App\Http\Controllers\Api\GalleryController')->saveImages($data);
+      $images = app('App\Http\Controllers\Api\V1\GalleryController')->saveImages($data);
 
       foreach($images as $image){   
        DB::table('images')->insert(['jagga_id' => $id, 'image' => $image , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')]);
@@ -362,7 +494,7 @@
 
 
        /**
- * @SWG\Post(
+ * @SWG\Delete(
  *   path="/jagga/delete",
  *   summary="Delete Jagga",
  *   operationId="deleteJagga",
@@ -439,7 +571,7 @@
 
 
       /**
- * @SWG\Post(
+ * @SWG\Get(
  *   path="/jagga/detail",
  *   summary="Jagga Detail",
  *   operationId="jdetail",

@@ -27,7 +27,7 @@ class User extends Authenticatable
   protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $fillable = [
 
-    'first_name', 'last_name','email', 'password','profile_pic','email','status'
+    'name','email', 'password','profile_pic','email','status'
     ];
 
     //protected $table = 'tbl_users'; 
@@ -69,8 +69,6 @@ class User extends Authenticatable
         'email'                             =>  $data['email'],    
 
         'profile_pic'                       =>  @$data['profile_pic'], 
-
-        'email'                             =>  $data['email'], 
 
         'status'                            =>  $data['status'],  
 

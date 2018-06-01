@@ -6,11 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "darkaonline/l5-swagger": "5.5.*",
+        "eventviva/php-image-resize": "1.5.*",
         "fideloper/proxy": "~3.3",
+        "jeroennoten/laravel-adminlte": "^1.23",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0",
-     "eventviva/php-image-resize": "1.5.*",
-     "darkaonline/l5-swagger": "5.5.*"
+        "laravel/tinker": "~1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

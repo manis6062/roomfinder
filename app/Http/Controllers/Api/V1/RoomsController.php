@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers\Api;
+<?php namespace App\Http\Controllers\Api\V1;
+
   use Illuminate\Http\Request;
 
   use App\Http\Requests;
@@ -8,6 +9,7 @@
   use App\Models\User;
   use App\Models\Images;
   use Lang,DB,Auth;
+  use Illuminate\Support\Facades\Input;
   class RoomsController extends Controller
   {
 
@@ -205,7 +207,7 @@
           }else{
             $path_to_save = base_path() . '/public/images/rooms/';      
     $input_field_name = 'image';        
-    $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$path_to_save,$input_field_name);
+    $image = app('App\Http\Controllers\Api\V1\GalleryController')->saveSingleImage($request,$path_to_save,$input_field_name);
           DB::table('images')->insert(['room_id' => $room_id, 'image' => $image]);
 
           }
@@ -214,7 +216,7 @@
        }
 
       /**
- * @SWG\Post(
+ * @SWG\Get(
  *   path="/room/detail",
  *   summary="Room Detail",
  *   operationId="rdetail",
@@ -233,11 +235,11 @@
  */ 
 
          public function rdetail(Request $request){
-   $input = $request->all();
 
+   $input = $request->all();
    $details = array();
    $v = \Validator::make($input,   [ 
-    'id' => 'required|numeric|exists:jaggas,id',                 
+    'id' => 'required|numeric|exists:rooms,id',                 
     ] );
    if ($v->fails())
    {   
@@ -248,6 +250,7 @@
     }  
   }   
   $details = Room::detail($input['id']);
+
   if($details){
     return \Response::json(array(  'error' => false,   'result' => $details  ) );
   }else{
@@ -257,10 +260,10 @@
 
 
          /**
- * @SWG\Post(
- *   path="/room/search",
+ * @SWG\Get(
+ *   path="/room/search-room",
  *   summary="Room Search",
- *   operationId="search",
+ *   operationId="searchRoom",
   *   @SWG\Parameter(
  *     name="per_page",
  *     in="formData",
@@ -387,14 +390,14 @@
  *
  */       
 
-    public function search(Request $request){
+    public function searchRoom(Request $request){
      $input = $request->all();     
      $v = \Validator::make($input,[    
       'per_page' =>'numeric',
       'page_number' =>'numeric',
       "user_id" => 'numeric',
       "no_of_floor" => 'numeric',
-      'sold'=>'numeric',
+      'occupied '=>'numeric',
       'high_price'=>'numeric',
       'low_price'=>'numeric'
       ]);
@@ -422,8 +425,84 @@
   }
 
 
+        /**
+ * @SWG\Get(
+ *   path="/room/myRooms",
+ *   summary="My Rooms",
+ *   operationId="myRooms",
+  *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="per_page",
+ *     in="formData",
+ *     description="Rooms Per Page",
+ *     required=false,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="page_number",
+ *     in="formData",
+ *     description="Per Page Number",
+ *     required=false,
+ *     type="integer"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */ 
+
+
+            public function myRooms(Request $request){
+     $input = $request->all();     
+     $v = \Validator::make($input,[    
+      'per_page' =>'numeric',
+      'page_number' =>'numeric',
+      "user_id" => 'required|numeric',
+      ]);
+     if ($v->fails())
+     {   
+      $msg = array();
+      $messages = $v->errors();           
+      foreach ($messages->all() as $message) {
+        return \Response::json(array(  'error' => true,  'message' => $message ) );
+      }               
+
+    }  
+
+      $result = Room::search($input);  
+    //$result = Car::searchAndroid($input);
+    if($result){
+      if(!isset($input['page_number'])){
+        $input['page_number'] = 1;
+      }
+      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+    }else{
+                  //echo "jere"; die;
+     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+   }
+  }
+
+
+
+
+
+
   /**
- * @SWG\Post(
+ * @SWG\Patch(
  *   path="/room/update-room",
  *   summary="Update Room",
  *   operationId="updateRoom",
@@ -568,21 +647,14 @@
     $v = \Validator::make($input,   [ 
                 //about
       'user_id' => 'required|numeric|exists:users,id', 
-         'type' => 'required',
-         'no_of_floor' =>'required',
-         'no_of_room' =>'required',
-          'kitchen' =>'required',
-          'parking' =>'required',
-           'restroom' =>'required',
-            'phone_no' =>'required',
-             'loc_lat' =>'required',
-              'loc_lon' =>'required',
-               'address' =>'required',
-                'preference' =>'required',
-                'price' =>'required',
-                'description' => 'required',
-                 'occupied' => 'required',
-                 'room_id' => 'required'
+         'type' => 'numeric',
+         'no_of_floor' =>'numeric',
+         'no_of_room' =>'numeric',
+            'phone_no' =>'numeric',
+             'loc_lat' =>'numeric',
+              'loc_lon' =>'numeric',
+                       'occupied' => 'numeric',
+                 'room_id' => 'numeric'
 
      ] );
   if ($v->fails())
@@ -618,7 +690,7 @@
                $this->uploadMultipleImages($request , $request->room_id);
           }else{
     $input_field_name = 'image';        
-    $image = app('App\Http\Controllers\Api\GalleryController')->saveSingleImage($request,$room_image_path,$input_field_name);
+    $image = app('App\Http\Controllers\Api\V1\GalleryController')->saveSingleImage($request,$room_image_path,$input_field_name);
           DB::table('images')->insert(['room_id' => $request->room_id, 'image' => $image]);
 
           }
@@ -663,7 +735,7 @@
       $data['input_field_name'] = 'image';       
       $data['request'] = $request; 
 
-      $images = app('App\Http\Controllers\Api\GalleryController')->saveImages($data);
+      $images = app('App\Http\Controllers\Api\V1\GalleryController')->saveImages($data);
 
       foreach($images as $image){   
        DB::table('images')->insert(['room_id' => $id, 'image' => $image , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')]);
@@ -672,7 +744,7 @@
 
 
      /**
- * @SWG\Post(
+ * @SWG\Delete(
  *   path="/room/delete",
  *   summary="Delete Room",
  *   operationId="deleteRoom",
@@ -750,3 +822,4 @@
 
 
   }
+ 

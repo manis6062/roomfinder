@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
+
 
 use Illuminate\Http\Request;
 
@@ -97,7 +98,7 @@ class UsersController extends Controller
 
             $path_to_save = base_path() . '/public/images/users/';			
             $input_field_name = 'profile_pic';				
-			$profile_pic = app('App\Http\Controllers\Api\GalleryController')->saveProfileImage($request,$path_to_save,$input_field_name);
+			$profile_pic = app('App\Http\Controllers\Api\V1\GalleryController')->saveProfileImage($request,$path_to_save,$input_field_name);
 			$user_data['profile_pic'] = $profile_pic;
 
 
@@ -113,7 +114,7 @@ class UsersController extends Controller
 						if($request->profile_pic){
             $path_to_save = base_path() . '/public/images/users/';	
             $input_field_name = 'profile_pic';				
-			$image = app('App\Http\Controllers\Api\GalleryController')->saveProfileImage($request,$path_to_save,$input_field_name);
+			$image = app('App\Http\Controllers\Api\V1\GalleryController')->saveProfileImage($request,$path_to_save,$input_field_name);
 
 							if($image){
 								$user->fill(['profile_pic' => $image])->save();
