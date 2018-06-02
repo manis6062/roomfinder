@@ -28,6 +28,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(array('namespace' => 'Admin' ), function() {
+		Route::get('/admin/rooms', 'RoomsController@lists');
+		Route::get('/admin/jaggas', 'JaggasController@lists');
+		Route::get('/admin/room-edit/{id}', 'RoomsController@edit');
+		Route::get('/admin/jagga-edit/{id}', 'JaggasController@edit');
+		Route::get('/admin/feedbacks', 'FeedbackController@lists');
+		Route::get('/admin/spam', 'SpamController@lists');
+});
+

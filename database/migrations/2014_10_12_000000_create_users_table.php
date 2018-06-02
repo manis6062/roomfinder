@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email' , 50)->unique();
             $table->string('password' , 200)->nullable();
             $table->rememberToken()->nullable();
-            $table->enum('status', ['0', '1'])->default('0');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

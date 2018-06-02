@@ -56,11 +56,7 @@ class User extends Authenticatable
 
   {
 
-       // return \Response::json('just before creating user' ); 
-
-        //dd($data); 
-
-     // $user_data['first_name'] = 
+   
 
       return self::create([
 
