@@ -3,10 +3,20 @@
 @section('title', 'Admin : Room')
 
 @section('content_header')
+<div class="box box-default" data-widget="box-widget">
+  <div class="box-header">
+ <h3 class="text-center">Rooms</h3>
+    <div class="box-tools">
+      <!-- This will cause the box to be removed when clicked -->
+      <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+      <!-- This will cause the box to collapse when clicked -->
+      <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+    </div>
+
    <table id="rooms" class="display">
         <thead>
             <tr>
-             <th>Action</th>
+             <th>View</th>
                 <th>User</th>
                 <th>Type</th>
                 <th>No of Floor</th>
@@ -31,8 +41,7 @@
 {{--                 <td>{{\App\Models\User::where('id' , 1)->first()->email}}</td>
  --}}           
   <td><div class="btn-group">
-                     <a href="{{url('/admin/room-edit/' . $room->id)}}"><i class="fa fa-edit" style="padding-right: 10px;"></i></a> 
-                       <a href="{{url('/room/delete/' . $room->id)}}"><i class="fa fa-trash-o" style="padding-right: 10px;"></i></a> 
+                     <a href="{{url('/admin/room-view/' . $room->id)}}"><i class="fa fa-eye"></i></a> 
                       
                     </div></td>
   <td>{{$room->user_id}}</td>
@@ -57,6 +66,10 @@
             
         </tbody>
     </table>
+  </div>
+</div>
+
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
               integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
               crossorigin="anonymous"></script>

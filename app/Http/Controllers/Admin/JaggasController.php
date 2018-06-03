@@ -16,7 +16,7 @@
 
              public function lists(Request $request){
  
-  $getAllJaggas = Jagga::all();
+  $getAllJaggas = Jagga::orderBy('id' , 'desc')->get();
   if($getAllJaggas){
     return view('admin.jaggalist' , compact('getAllJaggas'));
   }else{
@@ -26,10 +26,24 @@
 }
 
 
-  public function edit($id){
+  public function view($id){
     
-    $jagga = Jagga::find($id);
-    return view('admin.jagga-edit', compact('jagga'));
+   $jagga = Jagga::find($id);
+
+   if($jagga){
+      $images = Images::where('jagga_id' , $jagga->id)->get();
+     $image_path = url('/images/jaggas/thumb');
+     $jagga_images = array();
+       foreach ($images as $key => $value) {
+         $jagga_images[] = $image_path . '/' . $value->image;
+       }
+     }else{
+      return false;
+     }
+
+  
+
+       return view('admin.jagga-view', compact('jagga' , 'jagga_images'));
 
   }
 

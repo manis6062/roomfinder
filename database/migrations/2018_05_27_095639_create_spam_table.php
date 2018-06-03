@@ -14,12 +14,13 @@ class CreateSpamTable extends Migration
     public function up()
     {
         Schema::create('spam', function (Blueprint $table) {
-            $table->increments('id');
-             $table->integer('user_id')->unsigned();
+       $table->increments('id');
+        $table->integer('user_id')->unsigned();
+        $table->text('complains');
          $table->foreign('user_id')->references('id')->on('users');
-         $table->integer('room_id')->unsigned();
+         $table->integer('room_id')->unsigned()->nullable();
          $table->foreign('room_id')->references('id')->on('rooms');
-         $table->integer('jagga_id')->unsigned();
+         $table->integer('jagga_id')->unsigned()->nullable();
          $table->foreign('jagga_id')->references('id')->on('jaggas');
         $table->enum('read', ['0', '1'])->default('0');
                     $table->timestamp('deleted_at')->nullable();

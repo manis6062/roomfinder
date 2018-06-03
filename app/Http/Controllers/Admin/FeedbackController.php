@@ -13,7 +13,7 @@
 
              public function lists(Request $request){
  
-  $getAllFeedback = FeedBack::all();
+  $getAllFeedback = FeedBack::orderBy('id' , 'desc')->get();;
   if($getAllFeedback){
     return view('admin.feedbacklist' , compact('getAllFeedback'));
   }else{
@@ -23,11 +23,9 @@
 }
 
 
-  public function edit($id){
-    
-    $jagga = Jagga::find($id);
-    return view('admin.feedback-edit', compact('feedback'));
-
+  public function view($id){
+    $feedback = FeedBack::find($id);
+    return view('admin.feedback-view', compact('feedback'));
   }
 
  

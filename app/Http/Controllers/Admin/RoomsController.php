@@ -16,7 +16,7 @@
 
              public function lists(Request $request){
  
-  $getAllRooms = Room::all();
+  $getAllRooms = Room::orderBy('id' , 'desc')->get();
   if($getAllRooms){
     return view('admin.roomlist' , compact('getAllRooms'));
   }else{
@@ -26,10 +26,22 @@
 }
 
 
-  public function edit($id){
+  public function view($id){
+
     
     $room = Room::find($id);
-    return view('admin.room-edit', compact('room'));
+
+    $images = Images::where('room_id' , $room->id)->get();
+
+
+
+     $image_path = url('/images/rooms/thumb');
+     $room_images = array();
+       foreach ($images as $key => $value) {
+         $room_images[] = $image_path . '/' . $value->image;
+       }
+
+    return view('admin.room-view', compact('room' , 'room_images'));
 
   }
 

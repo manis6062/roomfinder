@@ -13,7 +13,7 @@
 
   public function lists(Request $request){
  
-  $getAllSpam = Spam::all();
+  $getAllSpam = Spam::orderBy('id' , 'desc')->get();
   if($getAllSpam){
     return view('admin.spamlist' , compact('getAllSpam'));
   }else{

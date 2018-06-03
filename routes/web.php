@@ -32,8 +32,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(array('namespace' => 'Admin' ), function() {
 		Route::get('/admin/rooms', 'RoomsController@lists');
 		Route::get('/admin/jaggas', 'JaggasController@lists');
-		Route::get('/admin/room-edit/{id}', 'RoomsController@edit');
-		Route::get('/admin/jagga-edit/{id}', 'JaggasController@edit');
+		Route::get('/admin/room-view/{id}', 'RoomsController@view');
+		Route::get('/admin/jagga-view/{id}', 'JaggasController@view');
+		Route::get('/admin/feedback-view/{id}', 'FeedbackController@view');
 		Route::get('/admin/feedbacks', 'FeedbackController@lists');
 		Route::get('/admin/spam', 'SpamController@lists');
 });
