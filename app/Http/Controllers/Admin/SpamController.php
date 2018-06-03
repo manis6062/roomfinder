@@ -25,10 +25,28 @@
 
   public function edit($id){
     
-    $jagga = Jagga::find($id);
+    $spam = Spam::find($id);
     return view('admin.spam-edit', compact('spam'));
 
   }
+
+
+  public function update($id, Request $request)
+{
+
+    $spam = Spam::findOrFail($id);
+    $spam->update($request->all());
+    return redirect('/admin/spam');
+}
+
+
+  public function destroy($id, Request $request)
+{
+
+    $spam = Spam::findOrFail($id);
+    $spam->delete($id);
+    return true;
+}
 
  
 

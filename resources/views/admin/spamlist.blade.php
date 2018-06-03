@@ -19,6 +19,7 @@
             <tr>
              <th>S. No.</th>
                 <th>Complains</th>
+                <th>Read</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -30,11 +31,15 @@
               <tr>
               <td>{{$count ++}}</td>
              <td>{{$spam->complains}}</td>
+            <td>  @if($spam->read == 1)
+                  <i class="fa fa-lg fa-check-circle-o"></i>
+                 @endif</td>
                  <td><div class="btn-group">
                      <a href="{{url('/admin/spam-edit/' . $spam->id)}}"><i class="fa fa-edit" style="padding-right: 10px;"></i></a> 
-                       <a href="{{url('/admin/spam-delete/' . $spam->id)}}"><i class="fa fa-trash-o" style="padding-right: 10px;"></i></a> 
+                       <a href="javascript:void(0);" id="{{$spam->id}}"><i class="fa fa-trash-o delete_spam" style="padding-right: 10px;"></i></a> 
                       
-                    </div></td>
+                    </div>
+                    </td>
             </tr>
             @endforeach
             
@@ -43,17 +48,53 @@
   </div>
 </div>
 
-
-  
+{{-- href="{{url('/admin/spam-delete/' . $spam->id)}}"
+ --}}  
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
               integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
               crossorigin="anonymous"></script>
     <script type="text/javascript">
 
+
 $(document).ready(function() {
-    $('#spam').DataTable( {
-      
-    });
+    $('#spam').DataTable();
+
+
+$('.delete_spam').click(function(){
+  if( confirm('Are you sure?') )
+  {
+    var id = $(this).attr('id');
+    alert(id);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
 });
+     $.ajax(
+    {
+        url: "spam-delete/"+id,
+        type: 'delete', 
+        dataType: "JSON",
+        data: {
+            "id": id // method and token not needed in data
+        },
+        success: function (response)
+        {
+            console.log(response); // see the reponse sent
+        },
+        error: function(xhr) {
+         console.log(xhr.responseText); // this line will save you tons of hours while debugging
+        // do something here because of error
+       }
+    });
+    // Make an ajax call to delete the record and pass the id to identify the record
+  }
+});
+
+
+
+
+
+} );
     </script>
 @stop

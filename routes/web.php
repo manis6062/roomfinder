@@ -37,5 +37,8 @@ Route::group(array('namespace' => 'Admin' ), function() {
 		Route::get('/admin/feedback-view/{id}', 'FeedbackController@view');
 		Route::get('/admin/feedbacks', 'FeedbackController@lists');
 		Route::get('/admin/spam', 'SpamController@lists');
+		Route::get('/admin/spam-edit/{id}', 'SpamController@edit');
+	    Route::put('/admin/spam-update/{id}', 'SpamController@update')->name('spam.update');
+	    Route::delete('/admin/spam-delete/{id}', 'SpamController@destroy');
 });
 

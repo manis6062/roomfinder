@@ -25,8 +25,11 @@
 
   public function view($id){
     $feedback = FeedBack::find($id);
+    $data['read'] = '1';
+    $feedback->update($data);
     return view('admin.feedback-view', compact('feedback'));
   }
+
 
  
 

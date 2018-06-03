@@ -169,17 +169,10 @@
  *   summary="Search Jagga",
  *   operationId="searchJagga",
  *   @SWG\Parameter(
- *     name="access_token",
- *     in="header",
- *     description="Access Token",
- *     required=true,
- *     type="string"
- *   ),
- *   @SWG\Parameter(
  *     name="user_id",
  *     in="formData",
  *     description="User Id",
- *     required=true,
+ *     required=false,
  *     type="integer"
  *   ),
   *   @SWG\Parameter(

@@ -17,6 +17,7 @@
             <tr>
              <th>S.No</th>
                 <th>Feedback</th>
+                <th>Read</th>
                  <th>View</th>
             </tr>
         </thead>
@@ -28,6 +29,11 @@
               <tr>
              <td>{{$count++}}</td>
                 <td>{{$feedback->feedback}}</td>
+                  <td>
+                 @if($feedback->read == 1)
+                  <i class="fa fa-1x bg-blue fa-check"></i>
+                 @endif
+                  </td>
                  <td><div class="btn-group">
                      <a href="{{url('/admin/feedback-view/' . $feedback->id)}}"><i class="fa fa-eye"></i></a> 
                     </div></td>

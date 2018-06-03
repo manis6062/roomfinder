@@ -117,17 +117,10 @@
                 "operationId": "searchJagga",
                 "parameters": [
                     {
-                        "name": "access_token",
-                        "in": "header",
-                        "description": "Access Token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "name": "user_id",
                         "in": "formData",
                         "description": "User Id",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {

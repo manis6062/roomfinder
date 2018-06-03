@@ -9,5 +9,5 @@ class Spam extends Model
    protected $table = 'spam';
 
    protected $fillable = array( 
-    'user_id','room_id','read' , 'jagga_id');
+    'user_id','room_id','read' , 'jagga_id' , 'complains');
 }
