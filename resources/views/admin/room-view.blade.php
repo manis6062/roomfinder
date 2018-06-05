@@ -78,7 +78,8 @@
     <div class="col-sm-12"> 
            @if($room_images)
                  @foreach($room_images as $image)
-               <div class="col-sm-4">   <p class="form-control-static"><img src="{{$image}}"></p>   </div> 
+               <div class="col-sm-4" style="border:1px solid snow; padding-top: 20px;">   
+               <img class="img-responsive" src="{{$image}}">  </div> 
                  @endforeach  
                  @endif    
                 

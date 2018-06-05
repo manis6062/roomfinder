@@ -281,7 +281,75 @@
 
 
 
+        /**
+ * @SWG\Get(
+ *   path="/room/my-jaggas",
+ *   summary="My aggas",
+ *   operationId="myJaggas",
+  *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="per_page",
+ *     in="formData",
+ *     description="Jaggas Per Page",
+ *     required=false,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="page_number",
+ *     in="formData",
+ *     description="Per Page Number",
+ *     required=false,
+ *     type="integer"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */ 
 
+
+            public function myJaggas(Request $request){
+     $input = $request->all();     
+     $v = \Validator::make($input,[    
+      'per_page' =>'numeric',
+      'page_number' =>'numeric',
+      "user_id" => 'required|numeric',
+      ]);
+     if ($v->fails())
+     {   
+      $msg = array();
+      $messages = $v->errors();           
+      foreach ($messages->all() as $message) {
+        return \Response::json(array(  'error' => true,  'message' => $message ) );
+      }               
+
+    }  
+
+      $result = Jagga::search($input);  
+    if($result){
+      if(!isset($input['page_number'])){
+        $input['page_number'] = 1;
+      }
+      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+    }else{
+                  //echo "jere"; die;
+     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+   }
+  }
 
 
 
@@ -391,7 +459,6 @@
     
     $v = \Validator::make($input,   [ 
                 //about
-     'type' => 'required',
             'phone_no' =>'numeric',
              'loc_lat' =>'numeric',
               'loc_lon' =>'numeric',

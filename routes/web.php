@@ -25,6 +25,7 @@ Route::get('/', function () {
 
 
 Auth::routes();
+Route::group(array('middleware' =>['auth']), function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -42,3 +43,4 @@ Route::group(array('namespace' => 'Admin' ), function() {
 	    Route::delete('/admin/spam-delete/{id}', 'SpamController@destroy');
 });
 
+});

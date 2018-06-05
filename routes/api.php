@@ -47,7 +47,9 @@ Route::group(array('namespace' => 'Api\V1' ), function() {
 
 
 	Route::get('room/search-room','RoomsController@searchRoom');
-	Route::post('jagga/search-jagga','JaggasController@searchJagga');
+	Route::get('jagga/search-jagga','JaggasController@searchJagga');
+	Route::get('room/detail','RoomsController@rdetail');
+	Route::get('jagga/detail','JaggasController@jdetail');
 });
 
 
@@ -56,13 +58,14 @@ Route::group(array('namespace' => 'Api\V1' ), function() {
 Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api\V1' ), function() {
 	Route::post('users/logout', 'UsersController@logout');
 	Route::post('room/add','RoomsController@addRoom');
-	Route::post('room/update-room','RoomsController@updateRoom');
+	Route::put('room/update-room','RoomsController@updateRoom');
 	Route::post('jagga/add','JaggasController@addJagga');
-	Route::post('jagga/update-jagga','JaggasController@updateJagga');
+	Route::put('jagga/update-jagga','JaggasController@updateJagga');
 	Route::post('room/delete','RoomsController@deleteRoom');
 	Route::post('jagga/delete','JaggasController@deleteJagga');
 
 	Route::post('room/my-rooms','RoomsController@myRooms');
+	Route::post('jagga/my-jaggas','JaggasController@myJaggas');
 
 });
 
