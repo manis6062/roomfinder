@@ -7,12 +7,19 @@
 <div class="box box-default" data-widget="box-widget">
   <div class="box-header">
  <h3 class="text-center">Spam</h3>
+
     <div class="box-tools">
       <!-- This will cause the box to be removed when clicked -->
       <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
       <!-- This will cause the box to collapse when clicked -->
       <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
     </div>
+    @if(\Session::has('success'))
+                            <div class="alert alert-success">
+                                <i class="fa fa-times pull-right closeMessage"></i>
+                                <p class="text-center">{{\Session::get('success')}}</p>
+                            </div>
+                        @endif
 
      <table id="spam" class="display">
         <thead>
@@ -36,7 +43,7 @@
                  @endif</td>
                  <td><div class="btn-group">
                      <a href="{{url('/admin/spam-edit/' . $spam->id)}}"><i class="fa fa-edit" style="padding-right: 10px;"></i></a> 
-                       <a href="javascript:void(0);" id="{{$spam->id}}"><i class="fa fa-trash-o delete_spam" style="padding-right: 10px;"></i></a> 
+                       <a href="javascript:void(0);"><i sid="{{$spam->id}}"  class="fa fa-trash-o delete_spam" style="padding-right: 10px;"></i></a> 
                       
                     </div>
                     </td>
@@ -46,6 +53,7 @@
         </tbody>
     </table>
   </div>
+      <meta name="csrf-token" content="{{ csrf_token() }}">
 </div>
 
 {{-- href="{{url('/admin/spam-delete/' . $spam->id)}}"
@@ -59,12 +67,18 @@
 $(document).ready(function() {
     $('#spam').DataTable();
 
+    $('.closeMessage').on('click', function (e) {
+            $('.alert').hide();
+        })
+
+
 
 $('.delete_spam').click(function(){
+
+
   if( confirm('Are you sure?') )
   {
-    var id = $(this).attr('id');
-    alert(id);
+    var id = $(this).attr('sid');
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -72,15 +86,19 @@ $('.delete_spam').click(function(){
 });
      $.ajax(
     {
-        url: "spam-delete/"+id,
-        type: 'delete', 
+        url: '/admin/spam-delete/' + id,       
+        type: 'DELETE', 
         dataType: "JSON",
         data: {
             "id": id // method and token not needed in data
         },
         success: function (response)
         {
-            console.log(response); // see the reponse sent
+          if(response == 1){
+            location.reload();// see the reponse sent
+          }else{
+             console.log(response);
+          }
         },
         error: function(xhr) {
          console.log(xhr.responseText); // this line will save you tons of hours while debugging

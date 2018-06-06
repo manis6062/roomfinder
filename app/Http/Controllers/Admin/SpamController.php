@@ -5,7 +5,8 @@
   use App\Http\Requests;
   use App\Http\Controllers\Controller;
   use Auth;
-  Use App\Models\Spam;
+  use App\Models\Spam;
+  use Session; 
   class SpamController extends Controller
   {
 
@@ -36,7 +37,8 @@
 
     $spam = Spam::findOrFail($id);
     $spam->update($request->all());
-    return redirect('/admin/spam');
+    return redirect('/admin/spam')->with('success', 'Spam has been updated successfully.  !');
+    // return redirect('/admin/spam');
 }
 
 
@@ -44,8 +46,11 @@
 {
 
     $spam = Spam::findOrFail($id);
-    $spam->delete($id);
-    return true;
+    if($spam->delete($id)){
+      Session(['success' => 'Spam has been deleted successfully.']);
+      return 1;
+    }
+    return 0;
 }
 
  
