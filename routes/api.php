@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Models\Room;
+use App\Models\Jagga;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +55,12 @@ Route::group(array('namespace' => 'Api\V1' ), function() {
 });
 
 
-
+ Route::get('room/checkDeleteOldRooms',function(){
+    	Room::checkDeleteOldRooms();
+    });
+  Route::get('jagga/checkDeleteOldJaggas',function(){
+    	Jagga::checkDeleteOldJaggas();
+    });
 # all routes which requires accesstoken
 Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api\V1' ), function() {
 	Route::post('users/logout', 'UsersController@logout');
@@ -66,6 +73,11 @@ Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api\V1
 
 	Route::post('room/my-rooms','RoomsController@myRooms');
 	Route::post('jagga/my-jaggas','JaggasController@myJaggas');
+	Route::post('jagga/my-favourite-jaggas','JaggasController@myFavouriteJaggas');
+	Route::post('room/my-favourite-rooms','RoomsController@myFavouriteRooms');
+
+   
+
 
 });
 

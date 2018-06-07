@@ -178,64 +178,37 @@ public static function detail($room_id){
 }
 
 
+ public static function checkDeleteOldRooms(){
+    $last2monthsroom = DB::select("SELECT * FROM rooms WHERE updated_at <= (NOW() - INTERVAL 2 MONTH)");
 
+    if($last2monthsroom){
+       foreach ($last2monthsroom as $key => $value) {
 
+        $notify = array();
+        $notify['user_id'] = $value->user_id;
+        $notify['room_id'] = $value->id;
+        $notify['mobile_target_id'] = $value->user_id;
+        $notify['type'] = 'notify_owner';
+        $notify['is_read'] = '0';
+        $notify['message'] = "Please reactivate this post.";
+        $notify['content_link'] = url('room/detail/' . $value->user_id);
 
-  public static function searchbyplace($data){
-  $lang = \App::getLocale(); 
-  $user_img_path = env("BASE_URL")."images/users/full/";
-  $car_img_path = env("BASE_URL")."images/cars/full/";
-  $limit = $fields = "";
-  $available_cars = array(); 
-  $fields = "";
-  if($lang == 'en'){
-   // $fields.="vt.title_eng as vehicle_type_title";
+        $notify_id = Notification::create($notify);
+
+           $room_id = $value->id;
+           $room = Room::find($room_id);
+           if($room->deleted_at != NULL){
+                       $room->delete();
+           }
+    }
   }else{
-   // $fields.="vt.title_thai as vehicle_type_title";
+    return false;
   }
-  //DB::connection()->enableQueryLog();
-  $cars = Car::from('cars as c')
-  ->distinct()
-  ->select('c.id','c.user_id','c.make_id','c.model_id','c.car_plate_number','c.is_instant_booking_enabled','c.vehicle_type_id','c.estimated_value_id','c.total_seats','c.year_made','c.enable_custom_mileage','c.mileage_limit','c.mileage_limit_week','c.mileage_limit_month','c.mileage_used','c.transmission','c.loc_lat','c.loc_lon','c.address','c.description','c.enable_custom_price','c.custom_price','c.custom_price_week','c.custom_price_month','c.offers_delivery','c.delivery_fee','c.pickup_instruction','c.availability_type','c.step_completed','c.status','c.rejection_reason','u.first_name','u.last_name','u.first_name','cp.photo','u.profile_pic','cm.car_make_url','cd.car_model_url','cm.title_eng as make_title','cd.title_eng as model_title'
-  )
-        ->join('users as u','u.id','=','c.user_id') 
-        ->join('car_estimated_values as cev','cev.id','=','c.estimated_value_id')
-        ->join('car_make as cm','cm.id','=','c.make_id')
-        ->join('car_features as cf','cf.car_id','=','c.id')
-        
-        ->join('car_models as cd','cd.id','=','c.model_id') 
-        ->join('car_photos as cp','cp.car_id','=','c.id')    
-        ->where(function($q) use ($data,$available_cars) {
-              $q->Where('c.status','=',  'listed' ); 
-              $q->Where('c.deleted','=',  0 ); 
-               if(isset($data['min_latitude']) and isset($data['max_latitude']) and isset($data['min_longitude']) and isset($data['max_longitude'])){
-                    $q->Where('c.loc_lat','>=', $data['min_latitude'] );
-                    $q->Where('c.loc_lat','<=', $data['max_latitude'] );
-                    $q->Where('c.loc_lon','>=',  $data['min_longitude'] ); 
-                    $q->Where('c.loc_lon','<=',  $data['max_longitude'] ); 
-                    }
-            })
-        ->groupBy('c.id')
-        ->orderBy('c.id','desc')
-        ->paginate(21);
-  $car_array = array();
-  $car_photos = array();
-  foreach($cars as $car){
-    $car->total_rentals = self::getTotalRentals($car->id);  
-    $car->rating_given = self::getTotalRatings($car->id); 
 
-    if($car->photo!=''){
-      $car->photo = $car_img_path.$car->photo;
-    }else{
-      $car->photo = url('images/global/cars/car_default.jpg');
-    }
-    if($car->profile_pic!=''){
-      $car->profile_pic = $user_img_path.$car->profile_pic;
-    }else{
-      $car->profile_pic = url('images/global/users/default-avatar.png');
-    }
+   
+
   }
-  return $cars;
-}
+
+
 
 }

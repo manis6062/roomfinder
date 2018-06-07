@@ -15,47 +15,6 @@ class RoomFinderFunctions {
 
 
 
-    public static function getGoogleDeviceTokens($user_id,$device_type){
-
-        $tokens = DB::table('user_sessions')->select('google_device_token','lang')
-
-        ->where('user_id',$user_id)
-
-        ->where('google_device_token','<>','')
-
-        ->where('device_type','=',$device_type)
-
-        //->toSql();
-
-        ->get();
-
-        $device_tokens = array();
-
-        $device = array(); 
-
-        if(count($tokens) > 0){
-
-            foreach($tokens as $token){
-
-                if($token->google_device_token){
-
-                    $device['token'] = $token->google_device_token;
-
-                    $device['lang'] = $token->lang;
-
-                }
-
-                array_push($device_tokens,$device); 
-
-            }
-
-        }
-
-        //var_dump($device_tokens); 
-
-        return $device_tokens; 
-
-    }
 
     public static function createAndSendNotification($device_tokens,$noti_id,$device_type){        
 
@@ -194,84 +153,6 @@ class RoomFinderFunctions {
        
 
     }
-
-
-
-    public static function createAndSendChatNotification($param){    
-
-        $device_tokens = array(); 
-
-        foreach($param['device_tokens'] as $dn){ 
-
-            $device_tokens[] = $dn['token']; 
-
-        } 
-
-        $ns = new NotificationScreens();
-
-        $notification_data = $ns->getMessage($param['mid']); 
-
-        $notification_id = time() + rand(1,99999999); 
-
-       
-
-        $msg = array
-
-        (     
-
-            'id'                => $notification_id,                    
-
-            'message'           => $notification_data['message'],
-
-            'mobile_target'     => $param['mobile_target'],
-
-            'mobile_sub_target' => $param['mobile_sub_target'],
-
-           // 'result'            => $notification_data,
-
-            'result'        => $ns->getData(array('mobile_target' => $param['mobile_sub_target'],'id'=> $param['booking_id']))
-
-
-
-        );  
-
-
-
-        if($param['device_type'] == 'ios'){
-
-            $notification = array(
-
-                'body' =>   $notification_data['message'],               
-
-                'sound' => 'default',
-
-                'click_action' => $param['mobile_target']
-
-            );
-
-            \Log::info( 'sending chat notification ios' );
-
-            self::sendNotification($device_tokens,$msg,$notification);
-
-        }else{
-
-            //var_dump($msg); die;
-
-            \Log::info( 'sending chat notification andriod' );
-
-            self::sendNotification($device_tokens,$msg);
-
-        } 
-
-    }
-
-
-
-
-
-
-
-    
 
 
 

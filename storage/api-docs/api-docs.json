@@ -200,6 +200,53 @@
                 }
             }
         },
+        "/room/my-favourite-jaggas": {
+            "get": {
+                "summary": "My Favourite jaggas",
+                "operationId": "myFavouriteJaggas",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "formData",
+                        "description": "Jaggas Per Page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "formData",
+                        "description": "Per Page Number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "User Id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
         "/room/my-jaggas": {
             "get": {
                 "summary": "My aggas",
@@ -539,6 +586,53 @@
                         "description": "(0 for occupied or 1 for not occupied)",
                         "required": true,
                         "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/room/my-favourite-rooms": {
+            "get": {
+                "summary": "My Favourite Rooms",
+                "operationId": "myFavouriteRooms",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "Access Token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "formData",
+                        "description": "Rooms Per Page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "formData",
+                        "description": "Per Page Number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "User Id",
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {

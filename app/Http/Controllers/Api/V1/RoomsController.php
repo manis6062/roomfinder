@@ -8,6 +8,7 @@
   use App\Models\Room;
   use App\Models\User;
   use App\Models\Images;
+    use App\Models\Myfavourite;
   use Lang,DB,Auth;
   use Illuminate\Support\Facades\Input;
   class RoomsController extends Controller
@@ -214,6 +215,93 @@
          
          return \Response::json(array(  'error' => false,  'room_id' => $room_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
        }
+
+
+       /**
+ * @SWG\Get(
+ *   path="/room/my-favourite-rooms",
+ *   summary="My Favourite Rooms",
+ *   operationId="myFavouriteRooms",
+  *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access Token",
+ *     required=true,
+ *     type="string"
+ *   ),
+  *   @SWG\Parameter(
+ *     name="per_page",
+ *     in="formData",
+ *     description="Rooms Per Page",
+ *     required=false,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="page_number",
+ *     in="formData",
+ *     description="Per Page Number",
+ *     required=false,
+ *     type="integer"
+ *   ),
+ *   @SWG\Parameter(
+ *     name="user_id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */ 
+
+
+            public function myFavouriteRooms(Request $request){
+     $input = $request->all();     
+     $v = \Validator::make($input,[    
+      'per_page' =>'numeric',
+      'page_number' =>'numeric',
+      "user_id" => 'required|numeric',
+      ]);
+     if ($v->fails())
+     {   
+      $msg = array();
+      $messages = $v->errors();           
+      foreach ($messages->all() as $message) {
+        return \Response::json(array(  'error' => true,  'message' => $message ) );
+      }               
+
+    }  
+
+     $my_favourite_rooms = Myfavourite::where('user_id' , $input['user_id'])->where('room_id' , '!=' , NULL)->get();
+
+     if($my_favourite_rooms->isNotEmpty()){
+             foreach ($my_favourite_rooms as $key => $value) {
+       $result[] = Room::detail($value->room_id); 
+     }
+
+      
+    if($result){
+      if(!isset($input['page_number'])){
+        $input['page_number'] = 1;
+      }
+      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+    }else{
+                  //echo "jere"; die;
+     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+   }
+     }else{
+ return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+     }
+
+
+ 
+  }
+
+
+
 
       /**
  * @SWG\Get(
