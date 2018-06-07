@@ -30,6 +30,7 @@ public function car_images(){
 public static function search($data){
    $limit = "";
 
+
   if( isset($data['per_page']) and isset($data['page_number']) ){
 
     $offset = $data['per_page'] * ($data['page_number']-1);

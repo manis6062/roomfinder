@@ -68,8 +68,8 @@ Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api\V1
 	Route::put('room/update-room','RoomsController@updateRoom');
 	Route::post('jagga/add','JaggasController@addJagga');
 	Route::put('jagga/update-jagga','JaggasController@updateJagga');
-	Route::post('room/delete','RoomsController@deleteRoom');
-	Route::post('jagga/delete','JaggasController@deleteJagga');
+	Route::delete('room/delete','RoomsController@deleteRoom');
+	Route::delete('jagga/delete','JaggasController@deleteJagga');
 
 	Route::post('room/my-rooms','RoomsController@myRooms');
 	Route::post('jagga/my-jaggas','JaggasController@myJaggas');

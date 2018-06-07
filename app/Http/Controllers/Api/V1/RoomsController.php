@@ -212,13 +212,22 @@
           DB::table('images')->insert(['room_id' => $room_id, 'image' => $image]);
 
           }
-         
-         return \Response::json(array(  'error' => false,  'room_id' => $room_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
+
+          
+         $result = Room::find($room_id);
+         $message = array();
+          $message['detail'] = 'Room was created successfully';
+          $message['type'] = 'Create';
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
+
+
+         return \Response::json(array(  'error' => false,  'data' => $result , 'message' => $message) );   
        }
 
 
        /**
- * @SWG\Get(
+ * @SWG\Post(
  *   path="/room/my-favourite-rooms",
  *   summary="My Favourite Rooms",
  *   operationId="myFavouriteRooms",
@@ -287,7 +296,7 @@
       if(!isset($input['page_number'])){
         $input['page_number'] = 1;
       }
-      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'data' => $result  ) );
     }else{
                   //echo "jere"; die;
      return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
@@ -340,7 +349,7 @@
   $details = Room::detail($input['id']);
 
   if($details){
-    return \Response::json(array(  'error' => false,   'result' => $details  ) );
+    return \Response::json(array(  'error' => false,   'data' => $details  ) );
   }else{
     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
   }
@@ -500,12 +509,15 @@
     }  
 
       $result = Room::search($input);  
-    //$result = Car::searchAndroid($input);
+
     if($result){
       if(!isset($input['page_number'])){
         $input['page_number'] = 1;
       }
-      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+      $input['total'] = count($result);
+      $paginate = RoomFinderFunctions::getPagination($input);
+
+      return \Response::json(array('error' => false, 'pagination' => $paginate ,  'data' => $result  ) );
     }else{
                   //echo "jere"; die;
      return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
@@ -577,7 +589,7 @@
       if(!isset($input['page_number'])){
         $input['page_number'] = 1;
       }
-      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'data' => $result  ) );
     }else{
                   //echo "jere"; die;
      return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
@@ -873,11 +885,13 @@
        ] );        
       if ($v->fails())
       {   
-        $msg = array();
-        $messages = $v->errors();           
-        foreach ($messages->all() as $message) {
+        $message = array();
+         $message['detail'] = 'Room doesn’t exist';
+         $message['type'] = 'Delete';
+          $message['context'] = 'Delete';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
           return \Response::json(array(  'error' => true,  'message' => $message ) );
-        }  
+
       }
 
       $room = Room::find($request->room_id);
@@ -898,10 +912,16 @@
     }
     $delete = $images->delete();
 
-      return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.success') ) );
+          $message = array();
+          $message['detail'] = 'Room was deleted successfully';
+          $message['type'] = 'Delete';
+          $message['context'] = 'Delete';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
+
+      return \Response::json(array(  'error' => false,  'message' => $message) ) ;
     }
       }else{
-         return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.invalid_room_id') ) );
+         return \Response::json(array(  'error' => false,  'message' => $message) ) ;
       }
 
    

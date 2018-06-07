@@ -157,7 +157,15 @@
 
           }
          
-         return \Response::json(array(  'error' => false,  'jagga_id' => $jagga_id , 'created_at' =>date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')) );   
+          $result = Jagga::find($jagga_id);
+          $message = array();
+          $message['detail'] = 'Jagga was created successfully';
+          $message['type'] = 'Create';
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
+
+
+return \Response::json(array(  'error' => false,  'data' => $result , 'message' => $message) );     
        }
 
 
@@ -273,7 +281,9 @@
       if(!isset($input['page_number'])){
         $input['page_number'] = 1;
       }
-      return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
+      $input['total'] = count($result);
+      $paginate = RoomFinderFunctions::getPagination($input);
+        return \Response::json(array('error' => false, 'pagination' => $paginate ,  'data' => $result  ) );
     }else{
                   //echo "jere"; die;
      return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
@@ -681,11 +691,12 @@
        ] );        
       if ($v->fails())
       {   
-        $msg = array();
-        $messages = $v->errors();           
-        foreach ($messages->all() as $message) {
+        $message = array();
+         $message['detail'] = 'Jagga doesn’t exist';
+         $message['type'] = 'Delete';
+          $message['context'] = 'Delete';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
           return \Response::json(array(  'error' => true,  'message' => $message ) );
-        }  
       }
       $jagga = Jagga::find($request->jagga_id);
       $jagga_image_path = base_path() . '/public/images/jaggas/';   
@@ -706,10 +717,18 @@
     }
     $delete = $images->delete();
 
-      return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.success') ) );
+    $message = array();
+          $message['detail'] = 'Jagga was deleted successfully';
+          $message['type'] = 'Delete';
+          $message['context'] = 'Delete';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
+
+          return \Response::json(array(  'error' => false,  'message' => $message) ) ;
+
     }
       }else{
-         return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.invalid_jagga_id') ) );
+               return \Response::json(array(  'error' => false,  'message' => $message) ) ;
+
       }
 
    

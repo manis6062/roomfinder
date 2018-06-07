@@ -250,49 +250,7 @@ class RoomFinderFunctions {
 
 
 
-    
 
-
-
-    public static function sendChat($data,$booking_id){
-
-        
-
-       // $default_url = 'https://rentacarclub-c4306.firebaseio.com/';
-
-        $default_url = 'https://rent-a-car-club.firebaseio.com/';
-
-        
-
-        //$default_token = 'Tv7xuk5tUYzcyZMuPBvqgVPsaKBHhADaK6NQFsJx';
-
-        $default_token = 'ETHjrXP3nzCGkh1jYmbouu0lOG5pIUjTvyF1ACPi';
-
-        
-
-        $default_path = env('FIREBASE_CHAT_NODE_PATH');
-
-
-
-        //$firebase = new Firebase($default_url, $default_token);
-
-        $firebase = new \Firebase\FirebaseLib($default_url, $default_token);
-
-        
-
-       // echo $default_path .'/'.$booking_id;
-
-        
-
-        $res = $firebase->push($default_path .'/'.$booking_id,$data);
-
-       // var_dump($res); die;
-
-
-
-
-
-    }
 
 
 
@@ -370,26 +328,6 @@ class RoomFinderFunctions {
 
     }
 
-    public static function generateApiKey ($user_id){
-
-        while( $new_ref = md5(uniqid( $user_id , true) )  ) {
-
-            $SQL = "SELECT id from webapi_users WHERE api_key = ? LIMIT 1";
-
-            $res = DB::select($SQL,[$new_ref]);
-
-            if(empty($res)){
-
-                $token = $new_ref;
-
-                return $token;
-
-            }            
-
-        }
-
-    }
-
 
     public static function generateResetPasswordToken ($user_id){
 
@@ -439,116 +377,6 @@ class RoomFinderFunctions {
 
     }
 
-    //api key checker
-    public static function checkApi($api_key){
-
-
-        $row = WebapiUser::where('api_key',$api_key)->where('status', 1)->first();
-
-        if($row){
-
-            return true;
-
-        }else{
-
-            return false;
-
-        }
-    }
-
-
-
-    public static function SendSmsMessage($number  = '9851221698' , $msg = 'no msg send',$country_code = '+66'  ) {   
-
-       
-        if(env('SEND_SMS') == 'NO'){
-            return; 
-        }
-            
-
-        $msg.=" -- ".env('SITE_TITLE');        
-
-        if($country_code == '+66'){   
-
-           // echo $number; die;                
-
-            $url = "http://www.thaibulksms.com/sms_api.php";
-
-            $data_string = "username=0939725546&password=311787&msisdn=$number&message=$msg&sender=NOTICE";
-
-            $agent = "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.4)Gecko/20030624 Netscape/7.1 (ax)";
-
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, $url);
-
-            curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
-
-            $result = curl_exec ($ch);            
-
-            curl_close ($ch);
-
-            if( strpos('<Status>0</Status>', $result )   ) {
-
-                return true;
-
-            } 
-
-            else  {
-
-                \Log::warning( 'error sending sms : ' . $number);
-
-                return false;
-
-            }
-
-
-
-        }else{
-
-            try{ 
-
-                $number = $country_code.$number;
-
-                /*echo $number;
-
-                echo $msg; 
-
-                dd('np');*/
-
-                Twilio::from('twilio')->message(  $number  ,  $msg  );
-
-            }
-
-            catch(\Exception $e) {
-
-            //error detected
-
-                //dd($e);
-
-                \Log::warning( ' SMS ERROR : ' .  $number   );
-
-                \Log::warning($e);
-
-                return false;
-
-            }
-
-
-
-        }
-
-        
-
-
-
-    }
 
 
 
@@ -826,106 +654,6 @@ class RoomFinderFunctions {
 }
 
 
-
-    public static function generateSlug($title,$table_name,$column_name,$edit = false)
-
-    {
-
-        $slug = Str::slug($title);
-
-           // $user = DB::table($table_name)->where('slug', "")->first();
-
-        if(!$edit){
-
-           $slugCount = count( DB::table($table_name)->whereRaw("{$column_name} REGEXP '^{$slug}(-[0-9]*)?$'"));
-
-       }else{
-
-        $slugCount = count( DB::table($table_name)->whereRaw("{$column_name} REGEXP '^{$slug}(-[0-9]*)?$'")->where($column_name,"!=",$slug));
-
-    }
-
-    return ($slugCount > 1) ? "{$slug}-{$slugCount}" : $slug;
-
-    }
-
-
-
-    public static function getEmailTemplate($slug){
-
-       // DB::enableQueryLog();
-
-     $template = Cms::where("status","active")->where("cms_type","email_template")->where("slug",$slug)->first(); 
-
-       //dd(DB::getQueryLog());
-
-     if($template){
-
-        return $template;
-
-    }else{
-
-        return false;
-
-    }
-
-    }
-
-
-
-public static function sendEmail($data){
-
-       // dd($data); 
-
-    Mail::send(['html' => 'emails.email_template'], ['content' => $data['message']], function ($m) use ($data) {
-
-        $m->from('support@rentacarclub.co', 'Rent a car club');
-
-        if(isset($data['attachment'])){
-
-            $m->attach($data['attachment'], ['mime' => $data['mime']]);
-
-        }
-
-        $to_name = ''; 
-
-        if(isset($data['to_name'])){ //this is because if the to_name is in thai or non english, space between the first name and last name is creating issue malformed receipient address
-
-            $to_name_array = explode(' ',$data['to_name']); 
-
-            $to_name = $to_name_array[0]; 
-
-        }
-
-        $to_name_array = $data['to_name'];
-
-        
-
-        $to_name = "=?UTF-8?B?".base64_encode($to_name)."?="; 
-
-        /*echo "<br>"; 
-
-        echo $data['to_email']; die;*/
-
-        if(isset($data['to_cc_email'])){
-             $m->cc($data['to_cc_email']);
-
-        }
-         //dd($data['to_cc_email']);
-
-        $m->to($data['to_email'],$to_name)->subject($data['subject']);
-
-      // $m->to('es.pradeeparyal@gmail.com',$to_name)->subject($data['subject']);
-
-
-
-    });
-
-
-
-   
-
-}
 
 
 
@@ -1761,6 +1489,36 @@ public static function getColumnName($table_name,$column_start,$lang_code = 'en'
     $column_name = $column_start.'_'.$lang[$lang_code]; 
     return $column_name; 
 }
+
+
+
+//NEW
+public static function getPagination($input){
+
+   $paginate = array();
+      $paginate['page'] = $input['page_number']+1;
+       
+      if(isset($input['per_page'])){
+          $paginate['limit'] = $input['per_page'];
+      } 
+      $paginate['total'] = $input['total'];
+      return $paginate;
+}
+
+
+public static function getSuccessMessage($msg){
+
+   
+          $message = array();
+          $message['detail'] = $msg['detail'];
+          $message['type'] = $msg['type'];
+          $message['context'] = $msg['context'];
+           $message['code'] = rand ( 1000 , 9999 );
+      return $message;
+}
+
+
+
 
 
 }
