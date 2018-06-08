@@ -40,7 +40,10 @@
                 <td>{{$jagga->loc_lat}}</td>
                 <td>{{$jagga->address}}</td>
                 <td>{{$jagga->price}}</td>
-                <td>{{$jagga->description}}</td>
+                  @php
+                      $value = str_limit($jagga->description, 140, '...');
+                       @endphp
+                <td>{{ $value }}</td>
                  <td>{{$jagga->sold}}</td>
             </tr>
             @endforeach

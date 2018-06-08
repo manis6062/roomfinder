@@ -55,10 +55,10 @@
                  <p class="form-control-static">{{$r->restroom}}</p>         
                   <label class="col-xs-4 control-label">Preference:</label>
                  <p class="form-control-static">{{$r->preference}}</p>         
-                  <label class="col-xs-4 control-label">Price:</label>
+                 <label class="col-xs-4 control-label">Price:</label>
                  <p class="form-control-static">{{$r->price}}</p>         
-                     <label class="col-xs-4 control-label">Description:</label>
-                 <p class="form-control-static">{{$r->description}}</p>         
+                     <label class="col-xs-4 control-label">Description</label><br>
+                     <div class="col-sm-8"> <p class="form-control-static">{{ $r->description }}</p>   </div>    
                    <label class="col-xs-4 control-label">Occupied:</label>
                  <p class="form-control-static">{{$r->occupied}}</p>     
                 

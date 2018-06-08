@@ -5,6 +5,7 @@ use DB;
 use App\Library\RoomFinderFunctions;
 use Log; 
 use Illuminate\Database\Eloquent\SoftDeletes; 
+use Illuminate\Support\Str;
 
 class Jagga extends Model
 {  
@@ -150,9 +151,14 @@ public static function search($data){
             ->get()->first(); 
 
   if($jagga){
-      $images = Images::where('jagga_id' , $jagga->id)->get();
-      $full_path_image = $room_img_path . $images;
-      $jagga->images = $images;
+     $images = Images::where('jagga_id' , $jagga->id)->get();
+    foreach ($images as $key => $value) {
+        $full_path_image = $room_img_path . $value->image;
+      $jagga->images[] = $full_path_image;
+    }
+
+      
+     
     return $jagga; 
 }else{
   return false;

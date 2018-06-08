@@ -27,8 +27,9 @@
   public function edit($id){
     
     $spam = Spam::find($id);
+    $data['read'] = '1';
+    $spam->update($data);
     return view('admin.spam-edit', compact('spam'));
-
   }
 
 

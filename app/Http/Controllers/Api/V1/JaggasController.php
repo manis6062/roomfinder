@@ -127,17 +127,21 @@
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Create';
-          $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+          $message['context'] = 'Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
       }
 
         if(!is_array($request->image)){
-              $message = "The image field must be an array.";
-              return \Response::json(array(  'error' => true,  'message' => Lang::get('messages.image_array') ) );
+      $message['detail'] = Lang::get('messages.image_array');
+          $message['type'] = 'validation';
+          $message['context'] = 'Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+            
         }
 
 
@@ -166,9 +170,9 @@
           $result = Jagga::find($jagga_id);
           $message = array();
           $message['detail'] = 'Jagga was created successfully';
-          $message['type'] = 'Create';
-          $message['context'] = 'post';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
+          $message['type'] = 'create';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
 
 
 return \Response::json(array(  'error' => false,  'data' => $result , 'message' => $message) );     
@@ -278,9 +282,9 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
-          $message['context'] = 'get';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+          $message['context'] = 'Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -296,8 +300,12 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
       $paginate = RoomFinderFunctions::getPagination($input);
         return \Response::json(array('error' => false, 'pagination' => $paginate ,  'data' => $result  ) );
     }else{
-                  //echo "jere"; die;
-     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+                  $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
    }
   }
 
@@ -359,9 +367,9 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
+          $message['type'] = 'validation';
           $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -381,10 +389,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
       return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
     }else{
                   //echo "jere"; die;
-     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+     $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
    }
      }else{
-       return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+       $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
      }
 
 
@@ -448,9 +466,9 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
-          $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+          $message['context'] = 'Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -463,8 +481,12 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
       }
       return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'result' => $result  ) );
     }else{
-                  //echo "jere"; die;
-     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+                 $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
    }
   }
 
@@ -592,9 +614,9 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Update';
+          $message['type'] = 'validation';
           $message['context'] = 'put';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -630,12 +652,21 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
           }
 
   }
+$message = array();
+          $message['detail'] = 'Jagga was updated successfully';
+          $message['type'] = 'update';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
 
-
-      return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.success') ) );
+      return \Response::json(array(  'error' => false,  'message' => $message));
   }
   else{
-    return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.invalid_room_id') ) );
+          $message = array();
+          $message['detail'] = Lang::get('messages.invalid_jagga_id');
+          $message['type'] = 'get';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
   }
 
       }
@@ -662,8 +693,8 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
 
       $message['detail'] = $mess;
           $message['type'] = 'Upload';
-          $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['context'] = 'Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -728,10 +759,10 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
      $messages = $v->errors();  
     foreach ($messages->all() as $mess) {
 
-      $message['detail'] = $mess;
-          $message['type'] = 'Delete';
+         $message['detail'] = 'Jagga doesn’t exist';
+          $message['type'] = 'validation';
           $message['context'] = 'delete';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -758,13 +789,18 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
     $message = array();
           $message['detail'] = 'Jagga was deleted successfully';
           $message['type'] = 'Delete';
-          $message['context'] = 'Delete';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
 
           return \Response::json(array(  'error' => false,  'message' => $message) ) ;
 
     }
       }else{
+          $message = array();
+          $message['detail'] = 'Jagga doesn’t exist';
+          $message['type'] = 'get';
+          $message['context'] = 'Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
                return \Response::json(array(  'error' => false,  'message' => $message) ) ;
 
       }
@@ -805,9 +841,9 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
      $messages = $v->errors();  
     foreach ($messages->all() as $mess) {
       $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
-          $message['context'] = 'get';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+          $message['context'] = 'Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }

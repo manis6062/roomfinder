@@ -13,7 +13,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\JaggasController' => $baseDir . '/app/Http/Controllers/Admin/JaggasController.php',
     'App\\Http\\Controllers\\Admin\\RoomsController' => $baseDir . '/app/Http/Controllers/Admin/RoomsController.php',
     'App\\Http\\Controllers\\Admin\\SpamController' => $baseDir . '/app/Http/Controllers/Admin/SpamController.php',
-    'App\\Http\\Controllers\\Api\\V1\\GalleryController' => $baseDir . '/app/Http/Controllers/Admin/GalleryController.php',
+    'App\\Http\\Controllers\\Api\\V1\\GalleryController' => $baseDir . '/app/Http/Controllers/Api/V1/GalleryController.php',
     'App\\Http\\Controllers\\Api\\V1\\JaggasController' => $baseDir . '/app/Http/Controllers/Api/V1/JaggasController.php',
     'App\\Http\\Controllers\\Api\\V1\\RoomsController' => $baseDir . '/app/Http/Controllers/Api/V1/RoomsController.php',
     'App\\Http\\Controllers\\Api\\V1\\UsersController' => $baseDir . '/app/Http/Controllers/Api/V1/UsersController.php',

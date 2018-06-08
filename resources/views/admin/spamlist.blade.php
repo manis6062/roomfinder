@@ -37,7 +37,10 @@
         @foreach($getAllSpam as $spam)
               <tr>
               <td>{{$count ++}}</td>
-             <td>{{$spam->complains}}</td>
+               @php
+                      $value = str_limit($spam->complains, 500, '...');
+                       @endphp
+                <td>{{ $value }}</td>
             <td>  @if($spam->read == 1)
                   <i class="fa fa-lg fa-check-circle-o"></i>
                  @endif</td>

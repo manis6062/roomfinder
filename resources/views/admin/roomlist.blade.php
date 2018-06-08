@@ -57,7 +57,10 @@
                 <td>{{$room->address}}</td>
                 <td>{{$room->preference}}</td>
                 <td>{{$room->price}}</td>
-                <td>{{$room->description}}</td>
+                  @php
+                      $value = str_limit($room->description, 30, '...');
+                       @endphp
+                <td>{{ $value }}</td>
                  <td>{{$room->occupied}}</td>
 
 

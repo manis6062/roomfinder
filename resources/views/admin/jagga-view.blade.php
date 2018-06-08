@@ -43,11 +43,12 @@
             </div>
             <div class="col-sm-6">
               <div class="form-horizontal">               
-                  <label class="col-xs-4 control-label">Price:</label>
+                  <label class="col-xs-2 control-label">Price:</label>
                  <p class="form-control-static">{{$j->price}}</p>         
-                     <label class="col-xs-4 control-label">Description:</label>
-                 <p class="form-control-static">{{$j->description}}</p>         
-                   <label class="col-xs-4 control-label">Sold:</label>
+                     <label class="col-xs-4 control-label">Description</label><br>
+                     <div class="col-sm-8"> <p class="form-control-static">{{ $j->description}}</p>   </div>
+                      
+                   <label class="col-xs-2 control-label">Sold:</label>
                  <p class="form-control-static">{{$j->sold}}</p>     
                 
               </div>

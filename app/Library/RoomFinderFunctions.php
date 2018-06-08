@@ -1506,7 +1506,7 @@ public static function getPagination($input){
 }
 
 
-public static function getSuccessMessage($msg){
+public static function getMessage($msg){
 
    
           $message = array();

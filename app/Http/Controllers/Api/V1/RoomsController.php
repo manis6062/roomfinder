@@ -177,9 +177,9 @@
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Create';
+          $message['type'] = 'validation';
           $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -225,7 +225,7 @@
           $message['detail'] = 'Room was created successfully';
           $message['type'] = 'Create';
           $message['context'] = 'post';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
+          $message = RoomFinderFunctions::getMessage($message);
 
 
          return \Response::json(array(  'error' => false,  'data' => $result , 'message' => $message) );   
@@ -287,9 +287,9 @@
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
-          $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+         $message['context'] = 'Room';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -309,11 +309,20 @@
       }
       return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'data' => $result  ) );
     }else{
-                  //echo "jere"; die;
-     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+                  $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+         $message['context'] = 'Room';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
    }
      }else{
- return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+ $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+         $message['context'] = 'Room';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
      }
 
 
@@ -356,9 +365,9 @@
     foreach ($messages->all() as $mess) {
 
          $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
-          $message['context'] = 'get';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+        $message['context'] = 'Room';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -366,9 +375,16 @@
   $details = Room::detail($input['id']);
 
   if($details){
+
     return \Response::json(array(  'error' => false,   'data' => $details  ) );
   }else{
-    return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+     $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
+
   }
   }
 
@@ -522,9 +538,9 @@
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
-          $message['context'] = 'get';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+        $message['context'] = 'Room';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -541,8 +557,13 @@
 
       return \Response::json(array('error' => false, 'pagination' => $paginate ,  'data' => $result  ) );
     }else{
-                  //echo "jere"; die;
-     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+        
+         $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+          $message['context'] = 'Room';
+          $message = RoomFinderFunctions::getMessage($message);          //echo "jere"; die;
+     return \Response::json(array(  'error' => true,   'message' => $message ) );
    }
   }
 
@@ -602,9 +623,9 @@
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Fetch';
-          $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+$message['context'] = 'Room';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -618,8 +639,12 @@
       }
       return \Response::json(array(  'error' => false, 'page_number' => ($input['page_number']+1), 'data' => $result  ) );
     }else{
-                  //echo "jere"; die;
-     return \Response::json(array(  'error' => true,   'message' => Lang::get('messages.resultnotfound')  ) );
+                  $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+       $message['context'] = 'Room';
+          $message = RoomFinderFunctions::getMessage($message);          //echo "jere"; die;
+     return \Response::json(array(  'error' => true,   'message' => $message ) );
    }
   }
 
@@ -791,9 +816,9 @@
     foreach ($messages->all() as $mess) {
 
       $message['detail'] = $mess;
-          $message['type'] = 'Update';
-          $message['context'] = 'put';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+          $message['context'] = 'Room';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
           return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
@@ -830,11 +855,22 @@
 
   }
 
+          $message = array();
+          $message['detail'] = 'Room was updated successfully';
+          $message['type'] = 'update';
+          $message['context'] = 'Room';
+          $message = RoomFinderFunctions::getMessage($message);
 
-      return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.success') ) );
+
+      return \Response::json(array(  'error' => false,  'message' => $message) );
   }
   else{
-    return \Response::json(array(  'error' => false,  'message' => Lang::get('messages.invalid_room_id') ) );
+          $message = array();
+          $message['detail'] = Lang::get('messages.invalid_room_id');
+          $message['type'] = 'update';
+          $message['context'] = 'Room';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => true,  'message' =>  $message) );
   }
  
 
@@ -920,9 +956,9 @@
       {   
         $message = array();
          $message['detail'] = 'Room doesn’t exist';
-         $message['type'] = 'Delete';
+          $message['type'] = 'validation';
           $message['context'] = 'Delete';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
+          $message = RoomFinderFunctions::getMessage($message);
           return \Response::json(array(  'error' => true,  'message' => $message ) );
 
       }
@@ -949,11 +985,16 @@
           $message['detail'] = 'Room was deleted successfully';
           $message['type'] = 'Delete';
           $message['context'] = 'Delete';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
+          $message = RoomFinderFunctions::getMessage($message);
 
       return \Response::json(array(  'error' => false,  'message' => $message) ) ;
     }
       }else{
+         $message = array();
+         $message['detail'] = 'Room doesn’t exist';
+          $message['type'] = 'delete';
+          $message['context'] = 'Room';
+          $message = RoomFinderFunctions::getMessage($message);
          return \Response::json(array(  'error' => false,  'message' => $message) ) ;
       }
 

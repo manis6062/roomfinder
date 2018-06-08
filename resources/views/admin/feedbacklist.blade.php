@@ -28,7 +28,10 @@
         @foreach($getAllFeedback as $feedback)
               <tr>
              <td>{{$count++}}</td>
-                <td>{{$feedback->feedback}}</td>
+             @php
+                      $value = str_limit($feedback->feedback, 500, '...');
+                       @endphp
+                <td>{{ $value }}</td>
                   <td>
                  @if($feedback->read == 1)
                   <i class="fa fa-1x bg-blue fa-check"></i>

@@ -354,7 +354,7 @@ class ComposerStaticInitafdd6106a9e6b9b7f0c8e42eccaebc20
         'App\\Http\\Controllers\\Admin\\JaggasController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/JaggasController.php',
         'App\\Http\\Controllers\\Admin\\RoomsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/RoomsController.php',
         'App\\Http\\Controllers\\Admin\\SpamController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SpamController.php',
-        'App\\Http\\Controllers\\Api\\V1\\GalleryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/GalleryController.php',
+        'App\\Http\\Controllers\\Api\\V1\\GalleryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/GalleryController.php',
         'App\\Http\\Controllers\\Api\\V1\\JaggasController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/JaggasController.php',
         'App\\Http\\Controllers\\Api\\V1\\RoomsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/RoomsController.php',
         'App\\Http\\Controllers\\Api\\V1\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/UsersController.php',

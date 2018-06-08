@@ -179,6 +179,33 @@ public static function detail($room_id){
 }
 
 
+
+ public static function Myfavourite($room_id){        
+  $room_img_path = env("BASE_URL")."images/rooms/full/";  
+
+  $jagga = DB::table('jaggas as j')
+            ->select('j.*', 'u.id as user_id')
+            ->leftJoin('users as u', 'u.id', '=', 'j.user_id')
+            ->where('j.id', '=' , $jagga_id)
+            ->get()->first(); 
+
+  if($jagga){
+     $images = Images::where('jagga_id' , $jagga->id)->get();
+    foreach ($images as $key => $value) {
+        $full_path_image = $room_img_path . $value->image;
+      $jagga->images[] = $full_path_image;
+    }
+
+      
+     
+    return $jagga; 
+}else{
+  return false;
+}
+
+}
+
+
  public static function checkDeleteOldRooms(){
     $last2monthsroom = DB::select("SELECT * FROM rooms WHERE updated_at <= (NOW() - INTERVAL 2 MONTH)");
 

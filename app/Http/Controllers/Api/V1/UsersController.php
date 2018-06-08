@@ -85,9 +85,9 @@ class UsersController extends Controller
 		foreach ($messages->all() as $mess) {
 
 		  $message['detail'] = $mess;
-          $message['type'] = 'Create/Update';
-          $message['context'] = 'post';
-          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+          $message['type'] = 'validation';
+          $message['context'] = 'login';
+          $mesg = RoomFinderFunctions::getMessage($message);  
 
 					return \Response::json(array(  'error' => true,  'message' => $mesg ) );
 				}
@@ -150,24 +150,27 @@ class UsersController extends Controller
 			if($tkn = User::setAppSession($input)){	
 			 $message = array();
           $message['detail'] = Lang::get('user.loggedin' );
-          $message['type'] = 'Create/Update';
-          $message['context'] = 'post';
-          $message = RoomFinderFunctions::getSuccessMessage($message);		
-				return \Response::json(array(  'error' => false,   'message' => $message,'user'=>$user1,'access_token' =>$tkn  )  );
-			}else{
+           $message['type'] = 'create/update';
+          $message['context'] = 'login';
+          $message = RoomFinderFunctions::getMessage($message);		
+				return \Response::json(array(  'error' => false,   'message' => $message,'data'=>$user1,'access_token' =>$tkn  )  );
+			}
+
+
+			else{
 					 $message = array();
           $message['detail'] = Lang::get('user.alreadyloggedin' );
-          $message['type'] = 'Create/Update';
-          $message['context'] = 'post';
-          $message = RoomFinderFunctions::getSuccessMessage($message);	
+           $message['type'] = 'create/update';
+          $message['context'] = 'login';
+          $message = RoomFinderFunctions::getMessage($message);	
 				return \Response::json(array(  'error' => true,    'message' => $message ));
 			}
 		}catch(ModelNotFoundException $e) {
 			 $message = array();
           $message['detail'] = Lang::get('user.logininvalid' );
-          $message['type'] = 'Create/Update';
-          $message['context'] = 'post';
-          $message = RoomFinderFunctions::getSuccessMessage($message);	
+          $message['type'] = 'create/update';
+          $message['context'] = 'login';
+          $message = RoomFinderFunctions::getMessage($message);	
 			return \Response::json(array(  'error' => true,    'message' => $message ));
 		}
 	}
@@ -210,14 +213,14 @@ class UsersController extends Controller
 			}
 			 $message = array();
           $message['detail'] = Lang::get('user.loggedout');
-          $message['context'] = 'post';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
+          $message['context'] = 'logout';
+          $message = RoomFinderFunctions::getMessage($message);
 			return \Response::json( array ( 'error' => false , 'message' => $message ) );	
 		}else{
 	      $message = array();
           $message['detail'] = Lang::get('user.invaliduser');
-          $message['context'] = 'post';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
+          $message['context'] = 'logout';
+          $message = RoomFinderFunctions::getMessage($message);
 			return \Response::json( array ( 'error' => false , 'message' => $message ) );	
 
 		}
