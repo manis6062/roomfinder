@@ -1511,7 +1511,9 @@ public static function getSuccessMessage($msg){
    
           $message = array();
           $message['detail'] = $msg['detail'];
-          $message['type'] = $msg['type'];
+          if(!empty($msg['type'])){
+             $message['type'] = $msg['type'];
+          }
           $message['context'] = $msg['context'];
            $message['code'] = rand ( 1000 , 9999 );
       return $message;

@@ -171,13 +171,19 @@
                  'occupied' => 'required'
          ] );        
         if ($v->fails())
-        {   
-          $msg = array();
-          $messages = $v->errors();           
-          foreach ($messages->all() as $message) {
-            return \Response::json(array(  'error' => true,  'message' => $message ) );
-          }  
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+      $message['detail'] = $mess;
+          $message['type'] = 'Create';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
+      }
 
         if(!is_array($request->image)){
               $message = "";
@@ -274,15 +280,20 @@
       'page_number' =>'numeric',
       "user_id" => 'required|numeric',
       ]);
-     if ($v->fails())
-     {   
-      $msg = array();
-      $messages = $v->errors();           
-      foreach ($messages->all() as $message) {
-        return \Response::json(array(  'error' => true,  'message' => $message ) );
-      }               
+        if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
 
-    }  
+      $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      }  
 
      $my_favourite_rooms = Myfavourite::where('user_id' , $input['user_id'])->where('room_id' , '!=' , NULL)->get();
 
@@ -338,14 +349,20 @@
    $v = \Validator::make($input,   [ 
     'id' => 'required|numeric|exists:rooms,id',                 
     ] );
-   if ($v->fails())
-   {   
-    $msg = array();
-    $messages = $v->errors();           
-    foreach ($messages->all() as $message) {
-      return \Response::json(array(  'error' => true,  'message' => $message ) );
-    }  
-  }   
+     if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+         $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'get';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      }  
   $details = Room::detail($input['id']);
 
   if($details){
@@ -498,15 +515,20 @@
       'high_price'=>'numeric',
       'low_price'=>'numeric'
       ]);
-     if ($v->fails())
-     {   
-      $msg = array();
-      $messages = $v->errors();           
-      foreach ($messages->all() as $message) {
-        return \Response::json(array(  'error' => true,  'message' => $message ) );
-      }               
+        if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
 
-    }  
+      $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'get';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      }  
 
       $result = Room::search($input);  
 
@@ -573,15 +595,20 @@
       'page_number' =>'numeric',
       "user_id" => 'required|numeric',
       ]);
-     if ($v->fails())
-     {   
-      $msg = array();
-      $messages = $v->errors();           
-      foreach ($messages->all() as $message) {
-        return \Response::json(array(  'error' => true,  'message' => $message ) );
-      }               
+         if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
 
-    }  
+      $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      }  
 
       $result = Room::search($input);  
     //$result = Car::searchAndroid($input);
@@ -757,14 +784,20 @@
                  'room_id' => 'numeric'
 
      ] );
-  if ($v->fails())
-  {   
-    $msg = array();
-    $messages = $v->errors();           
-    foreach ($messages->all() as $message) {
-      return \Response::json(array(  'error' => true,  'message' => $message ) );
-    }  
-  } 
+      if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+      $message['detail'] = $mess;
+          $message['type'] = 'Update';
+          $message['context'] = 'put';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      } 
 
   $room = Room::find($input['room_id']);
   $room_image_path = base_path() . '/public/images/rooms/';

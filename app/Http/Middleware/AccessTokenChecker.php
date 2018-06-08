@@ -23,10 +23,18 @@ class AccessTokenChecker
         }
         if(isset($access_token)){
             if(!RoomFinderFunctions::checkToken($access_token,$user_id)){
-                return \Response::json(array(  'error' => true,   'message' => 'Invalid access token' ));
+          $message = array();
+          $message['detail'] = 'Invalid access token';
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
+            return \Response::json( array ( 'error' => true , 'message' => $message ) );   
             }          
         }else{
-            return \Response::json(array(  'error' => true,   'message' => 'Access token not found' ));
+             $message = array();
+          $message['detail'] = 'Access token not found';
+          $message['context'] = 'post';
+        $message = RoomFinderFunctions::getSuccessMessage($message);
+            return \Response::json( array ( 'error' => true , 'message' => $message ) );   
         }
         return $next($request);
     }

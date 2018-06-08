@@ -120,14 +120,20 @@
                  'sold' => 'required|numeric',
                  'image' =>'required|max:50000',
          ] );        
-        if ($v->fails())
-        {   
-          $msg = array();
-          $messages = $v->errors();           
-          foreach ($messages->all() as $message) {
-            return \Response::json(array(  'error' => true,  'message' => $message ) );
-          }  
+               if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+      $message['detail'] = $mess;
+          $message['type'] = 'Create';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
         }
+      }
 
         if(!is_array($request->image)){
               $message = "The image field must be an array.";
@@ -265,15 +271,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
       'high_price'=>'numeric',
       'low_price'=>'numeric'
       ]);
-     if ($v->fails())
-     {   
-      $msg = array();
-      $messages = $v->errors();           
-      foreach ($messages->all() as $message) {
-        return \Response::json(array(  'error' => true,  'message' => $message ) );
-      }               
+           if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
 
-    }  
+      $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'get';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      } 
 
       $result = Jagga::search($input);  
     //$result = Car::searchAndroid($input);
@@ -341,15 +352,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
       'page_number' =>'numeric',
       "user_id" => 'required|numeric',
       ]);
-     if ($v->fails())
-     {   
-      $msg = array();
-      $messages = $v->errors();           
-      foreach ($messages->all() as $message) {
-        return \Response::json(array(  'error' => true,  'message' => $message ) );
-      }               
+        if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
 
-    }  
+      $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      }  
 
      $my_favourite_jaggas = Myfavourite::where('user_id' , $input['user_id'])->where('jagga_id' , '!=' , NULL)->get();
 
@@ -425,15 +441,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
       'page_number' =>'numeric',
       "user_id" => 'required|numeric',
       ]);
-     if ($v->fails())
-     {   
-      $msg = array();
-      $messages = $v->errors();           
-      foreach ($messages->all() as $message) {
-        return \Response::json(array(  'error' => true,  'message' => $message ) );
-      }               
+       if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
 
-    }  
+      $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      }   
 
       $result = Jagga::search($input);  
     if($result){
@@ -564,14 +585,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
                  'user_id' => 'numeric',
 
      ] );
-  if ($v->fails())
-  {   
-    $msg = array();
-    $messages = $v->errors();           
-    foreach ($messages->all() as $message) {
-      return \Response::json(array(  'error' => true,  'message' => $message ) );
-    }  
-  } 
+     if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+      $message['detail'] = $mess;
+          $message['type'] = 'Update';
+          $message['context'] = 'put';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      } 
 
   $jagga = Jagga::find($input['jagga_id']);
     $room_image_path = base_path() . '/public/images/jaggas/';
@@ -627,14 +654,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
           $rules['image.' . $index] = 'required|image|max:5120';
       }
       $v = \Validator::make($input, $rules);        
-      if ($v->fails())
-      {   
-        $msg = array();
-        $messages = $v->errors();           
-        foreach ($messages->all() as $message) {
-          return array(  'error' => true,  'message' => $message );  
-        }  
-      }
+       if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+      $message['detail'] = $mess;
+          $message['type'] = 'Upload';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      } 
 
       $data['path_to_save'] = base_path() . '/public/images/jaggas/';   
       $data['input_field_name'] = 'image';       
@@ -689,15 +722,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
        'user_id' => 'required|exists:users,id',    
        'jagga_id' => 'required|numeric|exists:jaggas,id',
        ] );        
-      if ($v->fails())
-      {   
-        $message = array();
-         $message['detail'] = 'Jagga doesn’t exist';
-         $message['type'] = 'Delete';
-          $message['context'] = 'Delete';
-          $message = RoomFinderFunctions::getSuccessMessage($message);
-          return \Response::json(array(  'error' => true,  'message' => $message ) );
-      }
+        if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+      $message['detail'] = $mess;
+          $message['type'] = 'Delete';
+          $message['context'] = 'delete';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      } 
       $jagga = Jagga::find($request->jagga_id);
       $jagga_image_path = base_path() . '/public/images/jaggas/';   
 
@@ -761,14 +799,19 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
    $v = \Validator::make($input,   [ 
     'id' => 'required|numeric|exists:jaggas,id',                 
     ] );
-   if ($v->fails())
-   {   
-    $msg = array();
-    $messages = $v->errors();           
-    foreach ($messages->all() as $message) {
-      return \Response::json(array(  'error' => true,  'message' => $message ) );
-    }  
-  }   
+      if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+      $message['detail'] = $mess;
+          $message['type'] = 'Fetch';
+          $message['context'] = 'get';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      }   
   $details = Jagga::detail($input['id']);
   if($details){
     return \Response::json(array(  'error' => false,   'result' => $details  ) );

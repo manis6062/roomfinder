@@ -76,14 +76,20 @@ class UsersController extends Controller
 				'device_id' =>'required',	
 				'fb_device_token' => 'required',				
 				'email' =>'required',	
-				'profile_pic' =>'required|image|max:500000',	
+				'profile_pic' =>'required|image|max:50000',	
 				]);
 			if ($v->fails())
 			{	
-				$msg = array();
-				$messages = $v->errors();			
-				foreach ($messages->all() as $message) {
-					return \Response::json(array(  'error' => true,  'message' => $message ) );
+		 $messages = array();
+		 $messages = $v->errors();	
+		foreach ($messages->all() as $mess) {
+
+		  $message['detail'] = $mess;
+          $message['type'] = 'Create/Update';
+          $message['context'] = 'post';
+          $mesg = RoomFinderFunctions::getSuccessMessage($message);  
+
+					return \Response::json(array(  'error' => true,  'message' => $mesg ) );
 				}
 			}
 			$path_to_save = base_path() . '/public/images/users/';					
@@ -138,14 +144,31 @@ class UsersController extends Controller
 			$input['user_id'] = $user1->id;						
 			$input['access_token'] = $token;
 			$user1->profile_pic = url('/public/images/users/thumb') . '/' .  $user1->profile_pic;
+			unset($user1['name']);
+			unset($user1['deleted_at']);
 			Logs::storeLog($input);
-			if($tkn = User::setAppSession($input)){			
-				return \Response::json(array(  'error' => false,   'message' => Lang::get('user.loggedin' ),'user'=>$user1,'access_token' =>$tkn  )  );
+			if($tkn = User::setAppSession($input)){	
+			 $message = array();
+          $message['detail'] = Lang::get('user.loggedin' );
+          $message['type'] = 'Create/Update';
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);		
+				return \Response::json(array(  'error' => false,   'message' => $message,'user'=>$user1,'access_token' =>$tkn  )  );
 			}else{
-				return \Response::json(array(  'error' => true,    'message' => array(Lang::get('user.alreadyloggedin' ) )));
+					 $message = array();
+          $message['detail'] = Lang::get('user.alreadyloggedin' );
+          $message['type'] = 'Create/Update';
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);	
+				return \Response::json(array(  'error' => true,    'message' => $message ));
 			}
 		}catch(ModelNotFoundException $e) {
-			return \Response::json(array(  'error' => true,   'message' => array(Lang::get('user.logininvalid' )  )  ));
+			 $message = array();
+          $message['detail'] = Lang::get('user.logininvalid' );
+          $message['type'] = 'Create/Update';
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);	
+			return \Response::json(array(  'error' => true,    'message' => $message ));
 		}
 	}
 
@@ -185,9 +208,18 @@ class UsersController extends Controller
 			        setcookie($name, '', time()-1000, '/');
 			    }
 			}
-			return \Response::json( array ( 'error' => false , 'message' => Lang::get('user.loggedout') ) );	
+			 $message = array();
+          $message['detail'] = Lang::get('user.loggedout');
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
+			return \Response::json( array ( 'error' => false , 'message' => $message ) );	
 		}else{
-			return \Response::json( array ( 'error' => true, 'message' => array(Lang::get('user.invaliduser' )  )) );
+	      $message = array();
+          $message['detail'] = Lang::get('user.invaliduser');
+          $message['context'] = 'post';
+          $message = RoomFinderFunctions::getSuccessMessage($message);
+			return \Response::json( array ( 'error' => false , 'message' => $message ) );	
+
 		}
 		
 	}
