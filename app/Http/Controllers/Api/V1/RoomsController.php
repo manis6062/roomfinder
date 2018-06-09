@@ -8,7 +8,7 @@
   use App\Models\Room;
   use App\Models\User;
   use App\Models\Images;
-    use App\Models\Myfavourite;
+  use App\Models\MyFavourite;
   use Lang,DB,Auth;
   use Illuminate\Support\Facades\Input;
   class RoomsController extends Controller
@@ -295,11 +295,11 @@
         }
       }  
 
-     $my_favourite_rooms = Myfavourite::where('user_id' , $input['user_id'])->where('room_id' , '!=' , NULL)->get();
+     $my_favourite_rooms = MyFavourite::where('user_id' , $input['user_id'])->where('room_id' , '!=' , NULL)->get();
 
      if($my_favourite_rooms->isNotEmpty()){
              foreach ($my_favourite_rooms as $key => $value) {
-       $result[] = Room::detail($value->room_id); 
+       $result[] = Room::MyfavouriteRooms($value->room_id); 
      }
 
       

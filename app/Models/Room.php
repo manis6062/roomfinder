@@ -168,7 +168,7 @@ public static function detail($room_id){
             ->get()->first(); 
 
   if($room){
-      $images = Images::where('room_id' , 3)->get();
+      $images = Images::where('room_id' , $room_id)->get();
       $full_path_image = $room_img_path . $images;
       $room->images = $images;
     return $room; 
@@ -180,25 +180,25 @@ public static function detail($room_id){
 
 
 
- public static function Myfavourite($room_id){        
+ public static function MyfavouriteRooms($room_id){        
   $room_img_path = env("BASE_URL")."images/rooms/full/";  
 
-  $jagga = DB::table('jaggas as j')
-            ->select('j.*', 'u.id as user_id')
-            ->leftJoin('users as u', 'u.id', '=', 'j.user_id')
-            ->where('j.id', '=' , $jagga_id)
+  $room = DB::table('rooms as r')
+            ->select('r.*', 'u.id as user_id')
+            ->leftJoin('users as u', 'u.id', '=', 'r.user_id')
+            ->where('r.id', '=' , $room_id)
             ->get()->first(); 
 
-  if($jagga){
-     $images = Images::where('jagga_id' , $jagga->id)->get();
+  if($room){
+     $images = Images::where('room_id' , $room->id)->get();
     foreach ($images as $key => $value) {
         $full_path_image = $room_img_path . $value->image;
-      $jagga->images[] = $full_path_image;
+      $room->images[] = $full_path_image;
     }
 
       
      
-    return $jagga; 
+    return $room; 
 }else{
   return false;
 }

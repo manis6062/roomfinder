@@ -379,7 +379,7 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
 
      if($my_favourite_jaggas->isNotEmpty()){
      foreach ($my_favourite_jaggas as $key => $value) {
-       $result[] = Jagga::Myfavourite($value->jagga_id); 
+       $result[] = Jagga::MyfavouriteJaggas($value->jagga_id); 
      }
       
     if($result){

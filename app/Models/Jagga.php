@@ -141,7 +141,7 @@ public static function search($data){
 }
 
 
- public static function Myfavourite($jagga_id){        
+ public static function MyfavouriteJaggas($jagga_id){        
   $room_img_path = env("BASE_URL")."images/jaggas/full/";  
 
   $jagga = DB::table('jaggas as j')
