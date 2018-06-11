@@ -18,6 +18,10 @@ return [
 
 	"error" 				=> "Error",
 
+	"added_to_fav"   => "Successfully Added to Favourites",
+	"room_or_jagga"   => "Room Id or Jagga Id is required",
+	"already_add_to_fav"   => "Already add to favourites"
+
 
 ];
 

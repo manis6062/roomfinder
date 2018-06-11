@@ -34,19 +34,20 @@ class Kernel extends ConsoleKernel
           $schedule->call(function(){
 
             Room::checkDeleteOldRooms();
+             Log::info('ROOM - DAILY - cron function called for removing last two months not updated');
 
          })->daily();
 
-          Log::info('ROOM - DAILY - cron function called for removing last two months not updated');
+         
 
 
 
           $schedule->call(function(){
 
             Jagga::checkDeleteOldJaggas();
-
+         Log::info('Jagga - DAILY - cron function called for removing last two months not updated');
          })->daily();
-        Log::info('Jagga - DAILY - cron function called for removing last two months not updated');
+       
 
     }
 

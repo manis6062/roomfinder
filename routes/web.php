@@ -15,13 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-# the api routes version 1
-// Route::group(array('namespace' => 'Api/V1'), function() {
-//     Route::get('/api/room/detail','RoomsController@rdetail');
-// 	Route::get('/api/jagga/detail','JaggasController@jdetail');
-// 	Route::get('/api/room/search','RoomsController@search');
 
-// });
+Route::get('/clear-cache', function() {
+	 $exitCode = Artisan::call('config:cache');
+    $exitCode = Artisan::call('cache:clear');
+    echo "cache cleared succesfully";
+    // return what you want
+});
 
 
 Auth::routes();

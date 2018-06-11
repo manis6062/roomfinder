@@ -21,24 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
-// # the api routes version 1
-// Route::group(array('namespace' => 'Api' ), function() {
-// 	Route::post('users/fblogin', 'UsersController@fblogin');
-// });
-
-
-
-// # all routes which requires accesstoken
-// Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api' ), function() {
-// 	Route::post('users/logout', 'UsersController@logout');
-// 	Route::post('room/add','RoomsController@addRoom');
-// 	Route::patch('room/update-room','RoomsController@updateRoom');
-// 	Route::post('jagga/add','JaggasController@addJagga');
-// 	Route::patch('jagga/update-jagga','JaggasController@updateJagga');
-// 	Route::delete('room/delete','RoomsController@deleteRoom');
-// 	Route::delete('jagga/delete','JaggasController@deleteJagga');
-
-// });
 
 Route::group(array('prefix' => 'v1/' ), function() {
 
@@ -75,6 +57,8 @@ Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api\V1
 	Route::post('jagga/my-jaggas','JaggasController@myJaggas');
 	Route::post('jagga/my-favourite-jaggas','JaggasController@myFavouriteJaggas');
 	Route::post('room/my-favourite-rooms','RoomsController@myFavouriteRooms');
+
+	Route::post('users/add-to-favourites','UsersController@AddToFavourite');
 
    
 

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\User;
+use App\Models\MyFavourite;
 use DB,File;
 use App\Library\RoomFinderFunctions;
 use App\Models\Logs; 
@@ -226,6 +227,134 @@ class UsersController extends Controller
 		}
 		
 	}
+
+
+
+	    /**
+ * @SWG\Get(
+ *   path="/user/add-to-favourite",
+ *   summary="Add to favourite",
+ *   operationId="AddToFavourite",
+  *   @SWG\Parameter(
+ *     name="id",
+ *     in="formData",
+ *     description="User Id",
+ *     required=true,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="id",
+ *     in="formData",
+ *     description="Room Id",
+ *     required=false,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="id",
+ *     in="formData",
+ *     description="Jagga Id",
+ *     required=false,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */ 
+
+         public function AddToFavourite(Request $request){
+
+   $input = $request->all();
+   $details = array();
+   $v = \Validator::make($input,   [ 
+    'user_id' => 'required|numeric|exists:users,id',
+     'room_id' => 'numeric|exists:rooms,id',
+      'jagga_id' => 'numeric|exists:jaggas,id',                 
+    ] );
+     if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+         $message['detail'] = $mess;
+          $message['type'] = 'validation';
+        $message['context'] = 'Room/Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      } 
+
+      if(!empty($input['room_id'])  || !empty($input['jagga_id'])){
+
+      	$data = array();
+      	$data['created_at'] = date('Y-m-d H:i:s');
+      	$data['deleted_at'] = date('Y-m-d H:i:s');
+      	$data['user_id'] = $input['user_id'];
+      	if(!empty($input['room_id'])){
+      		       $prev_room = MyFavourite::where('user_id' , $input['user_id'])->where('room_id' , $input['room_id'])->get();
+      		      	$data['room_id'] = $input['room_id'];
+
+
+         if($prev_room->isNotEmpty()){
+            $message = array();
+          $message['detail'] = Lang::get('messages.already_add_to_fav');
+          $message['type'] = 'create';
+        $message['context'] = 'Room/Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+          return \Response::json(array(  'error' => false,  'message' =>  $message) );
+        }else{
+        	$user_fav_id = MyFavourite::create($data)->id;
+        }
+
+      	}
+      	if(!empty($input['jagga_id'])){
+      		$prev_jagga = MyFavourite::where('user_id' , $input['user_id'])->where('jagga_id' , $input['jagga_id'])->get();
+      		      	$data['jagga_id'] = $input['jagga_id'];
+
+      		      	if($prev_jagga->isNotEmpty()){
+        	 $message = array();
+          $message['detail'] = Lang::get('messages.already_add_to_fav');
+          $message['type'] = 'create';
+        $message['context'] = 'Room/Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+          return \Response::json(array(  'error' => false,  'message' =>  $message) );
+
+        }else{
+        	$user_fav_id = MyFavourite::create($data)->id;
+        }
+      	}
+
+      	
+      }else{
+      	 $message = array();
+          $message['detail'] = Lang::get('messages.room_or_jagga');
+          $message['type'] = 'create';
+        $message['context'] = 'Room/Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
+      }
+  
+  if($user_fav_id){
+  	$user_favourite = MyFavourite::where('id' , $user_fav_id)->get();
+  	 $message['detail'] = Lang::get('messages.added_to_fav');
+         $message['type'] = 'create';
+        $message['context'] = 'Room/Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
+
+    return \Response::json(array(  'error' => false,   'data' => $user_favourite , 'message' => $message ) );
+  }else{
+     $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'create';
+        $message['context'] = 'Room/Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
+
+  }
+  }
 
 
 
