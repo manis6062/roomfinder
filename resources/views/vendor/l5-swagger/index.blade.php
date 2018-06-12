@@ -26,6 +26,26 @@
       margin:0;
       background: #fafafa;
     }
+
+    .swagger-ui .topbar{
+      display: none;
+    }
+
+    .swagger-ui .info{
+      text-align: center;
+    }
+
+    .swagger-ui .info a{
+      display: none;
+    }
+
+    .swagger-ui .info hgroup.main a{
+      display: none;
+    }
+
+    .swagger-ui .info > div{
+      display: none;
+    }
   </style>
 </head>
 

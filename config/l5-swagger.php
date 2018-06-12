@@ -206,6 +206,6 @@ return [
     |--------------------------------------------------------------------------
      */
     'constants' => [
-        'L5_SWAGGER_CONST_HOST' => 'http://my-default-host.com',
+        'L5_SWAGGER_CONST_HOST' => '127.0.0.1:8000',
     ],
 ];

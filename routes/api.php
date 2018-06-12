@@ -57,8 +57,8 @@ Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api\V1
 	Route::post('jagga/my-jaggas','JaggasController@myJaggas');
 	Route::post('jagga/my-favourite-jaggas','JaggasController@myFavouriteJaggas');
 	Route::post('room/my-favourite-rooms','RoomsController@myFavouriteRooms');
-
-	Route::post('users/add-to-favourites','UsersController@AddToFavourite');
+    Route::post('users/add-to-favourites','UsersController@AddToFavourite');
+	Route::post('fav/add-to-favourites','UsersController@AddToFavourite');
 
    
 

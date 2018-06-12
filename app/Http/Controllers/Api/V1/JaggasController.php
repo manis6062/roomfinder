@@ -314,7 +314,7 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
 
         /**
  * @SWG\Get(
- *   path="/room/my-favourite-jaggas",
+ *   path="/jagga/my-favourite-jaggas",
  *   summary="My Favourite jaggas",
  *   operationId="myFavouriteJaggas",
   *   @SWG\Parameter(
@@ -413,7 +413,7 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
 
         /**
  * @SWG\Get(
- *   path="/room/my-jaggas",
+ *   path="/jagga/my-jaggas",
  *   summary="My aggas",
  *   operationId="myJaggas",
   *   @SWG\Parameter(

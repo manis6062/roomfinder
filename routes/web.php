@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::get('/clear-cache', function() {
 	 $exitCode = Artisan::call('config:cache');
     $exitCode = Artisan::call('cache:clear');
+    Artisan::call('l5-swagger:generate');
     echo "cache cleared succesfully";
     // return what you want
 });

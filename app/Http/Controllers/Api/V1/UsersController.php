@@ -228,13 +228,18 @@ class UsersController extends Controller
 		
 	}
 
-
-
-	    /**
- * @SWG\Get(
- *   path="/user/add-to-favourite",
+/**
+ * @SWG\Post(
+ *   path="/fav/add-to-favourites",
  *   summary="Add to favourite",
  *   operationId="AddToFavourite",
+  *   @SWG\Parameter(
+ *     name="access_token",
+ *     in="header",
+ *     description="Access token",
+ *     required=true,
+ *     type="string"
+ *   ),
   *   @SWG\Parameter(
  *     name="id",
  *     in="formData",

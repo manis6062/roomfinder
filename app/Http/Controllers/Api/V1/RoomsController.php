@@ -233,7 +233,7 @@
 
 
        /**
- * @SWG\Post(
+ * @SWG\Get(
  *   path="/room/my-favourite-rooms",
  *   summary="My Favourite Rooms",
  *   operationId="myFavouriteRooms",
