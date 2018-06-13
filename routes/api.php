@@ -34,6 +34,7 @@ Route::group(array('namespace' => 'Api\V1' ), function() {
 	Route::get('jagga/search-jagga','JaggasController@searchJagga');
 	Route::get('room/detail','RoomsController@rdetail');
 	Route::get('jagga/detail','JaggasController@jdetail');
+	Route::get('all-room-jagga','UsersController@allRoomJagga');
 });
 
 

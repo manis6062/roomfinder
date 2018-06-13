@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\User;
 use App\Models\MyFavourite;
+use App\Models\Room;
 use DB,File;
 use App\Library\RoomFinderFunctions;
 use App\Models\Logs; 
@@ -359,6 +360,75 @@ class UsersController extends Controller
     return \Response::json(array(  'error' => false,  'message' =>  $message) );
 
   }
+  }
+
+
+   /**
+ * @SWG\Get(
+ *   path="/all-room-jagga",
+ *   summary="All rooms and Jaggas",
+ *   operationId="allRoomJagga",
+  *   @SWG\Parameter(
+ *     name="per_page",
+ *     in="formData",
+ *     description="Rooms Per Page",
+ *     required=false,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="page_number",
+ *     in="formData",
+ *     description="Per Page Number",
+ *     required=false,
+ *     type="integer"
+ *   ),
+ *   @SWG\Response(response=200, description="successful operation"),
+ *   @SWG\Response(response=406, description="not acceptable"),
+ *   @SWG\Response(response=500, description="internal server error")
+ * )
+ *
+ */
+
+
+    public function allRoomJagga(Request $request){
+     $input = $request->all();     
+     $v = \Validator::make($input,[    
+      'per_page' =>'numeric',
+      'page_number' =>'numeric',
+      ]);
+           if ($v->fails())
+      { 
+     $messages = array();
+     $messages = $v->errors();  
+    foreach ($messages->all() as $mess) {
+
+      $message['detail'] = $mess;
+          $message['type'] = 'validation';
+          $message['context'] = 'Room/Jagga';
+          $mesg = RoomFinderFunctions::getMessage($message);  
+
+          return \Response::json(array(  'error' => true,  'message' => $mesg ) );
+        }
+      } 
+
+      $result = Room::getAllRoomsJaggas($input);  
+
+    //$result = Car::searchAndroid($input);
+    if($result){
+      if(!isset($input['page_number'])){
+        $input['page_number'] = 1;
+      }
+      $input['total'] = count($result);
+      $paginate = RoomFinderFunctions::getPagination($input);
+        return \Response::json(array('error' => false, 'pagination' => $paginate ,  'data' => $result  ) );
+    }else{
+                  $message = array();
+          $message['detail'] = Lang::get('messages.resultnotfound');
+          $message['type'] = 'get';
+          $message['context'] = 'Room/Jagga';
+          $message = RoomFinderFunctions::getMessage($message);
+    return \Response::json(array(  'error' => false,  'message' =>  $message) );
+   }
   }
 
 

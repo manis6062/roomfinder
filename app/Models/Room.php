@@ -239,4 +239,59 @@ public static function detail($room_id){
 
 
 
+  public static function getAllRoomsJaggas(){
+
+     $room_img_path = env("BASE_URL")."images/rooms/full/";
+     $jagga_img_path = env("BASE_URL")."images/jaggas/full/";
+
+
+     $room = Room::orderBy('id' , 'DESC')->get();
+     $jagga = Jagga::orderBy('id' , 'DESC')->get();
+
+     foreach ($room as $key => $value) {
+        $jagga->add($value);
+     }
+
+     $results = $jagga;
+
+  if($results->IsNotEmpty()){
+
+    foreach ($results as $key => $value) {
+       
+       $new_image = array();
+           if($value->no_of_floor){
+                        $room_images = Images::where('room_id' , $value->id)->get();
+                        foreach ($room_images as $room_value) {
+                      $full_path_image = $room_img_path . $room_value->image;
+                    $new_image[] = $full_path_image;
+                  }
+                  $results[$key]->context = 'room';
+           }else{
+              $jagga_images = Images::where('jagga_id' , $value->id)->get();
+                        foreach ($jagga_images as $jagga_value) {
+                      $full_path_image = $jagga_img_path . $jagga_value->image;
+                    $new_image[] = $full_path_image;
+                  }
+                  $results[$key]->im = $new_image;
+                   $results[$key]->context = 'jagga';
+           }
+
+
+         $results[$key]->im = $new_image;
+
+      
+    }
+
+
+      
+     
+    return $results; 
+}else{
+  return false;
+}
+
+  }
+
+
+
 }

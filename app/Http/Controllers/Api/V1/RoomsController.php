@@ -105,13 +105,6 @@
  *     type="string"
  *   ),
     *   @SWG\Parameter(
- *     name="image[]",
- *     in="formData",
- *     description="Room Image",
- *     required=true,
- *     type="file",
- *   ),
-    *   @SWG\Parameter(
  *     name="preference",
  *     in="formData",
  *     description="Preference",

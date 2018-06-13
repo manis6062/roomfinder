@@ -187,6 +187,20 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   path="/jagga/search-jagga",
  *   summary="Search Jagga",
  *   operationId="searchJagga",
+  *   @SWG\Parameter(
+ *     name="per_page",
+ *     in="formData",
+ *     description="Rooms Per Page",
+ *     required=false,
+ *     type="integer"
+ *   ),
+   *   @SWG\Parameter(
+ *     name="page_number",
+ *     in="formData",
+ *     description="Per Page Number",
+ *     required=false,
+ *     type="integer"
+ *   ),
  *   @SWG\Parameter(
  *     name="user_id",
  *     in="formData",
@@ -228,13 +242,6 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *     description="Address",
  *     required=false,
  *     type="string"
- *   ),
-    *   @SWG\Parameter(
- *     name="image",
- *     in="formData",
- *     description="Room Image",
- *     required=false,
- *     type="file",
  *   ),
     *   @SWG\Parameter(
  *     name="price",
