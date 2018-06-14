@@ -54,10 +54,10 @@ Route::group(array('middleware' =>['accesstokenchecker'], 'namespace' => 'Api\V1
 	Route::delete('room/delete','RoomsController@deleteRoom');
 	Route::delete('jagga/delete','JaggasController@deleteJagga');
 
-	Route::post('room/my-rooms','RoomsController@myRooms');
-	Route::post('jagga/my-jaggas','JaggasController@myJaggas');
-	Route::post('jagga/my-favourite-jaggas','JaggasController@myFavouriteJaggas');
-	Route::post('room/my-favourite-rooms','RoomsController@myFavouriteRooms');
+	Route::get('room/my-rooms','RoomsController@myRooms');
+	Route::get('jagga/my-jaggas','JaggasController@myJaggas');
+	Route::get('jagga/my-favourite-jaggas','JaggasController@myFavouriteJaggas');
+	Route::get('room/my-favourite-rooms','RoomsController@myFavouriteRooms');
     Route::post('users/add-to-favourites','UsersController@AddToFavourite');
 	Route::post('fav/add-to-favourites','UsersController@AddToFavourite');
 

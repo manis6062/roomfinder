@@ -20,7 +20,7 @@
  *   summary="Add Jagga",
  *   operationId="addJagga",
  *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -189,77 +189,77 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   operationId="searchJagga",
   *   @SWG\Parameter(
  *     name="per_page",
- *     in="formData",
+ *     in="query",
  *     description="Rooms Per Page",
  *     required=false,
  *     type="integer"
  *   ),
    *   @SWG\Parameter(
  *     name="page_number",
- *     in="formData",
+ *     in="query",
  *     description="Per Page Number",
  *     required=false,
  *     type="integer"
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=false,
  *     type="integer"
  *   ),
   *   @SWG\Parameter(
  *     name="type",
- *     in="formData",
+ *     in="query",
  *     description="Type",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="phone_no",
- *     in="formData",
+ *     in="query",
  *     description="Phone no.",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lat",
- *     in="formData",
+ *     in="query",
  *     description=" Location - Longitude",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lon",
- *     in="formData",
+ *     in="query",
  *     description="Location - Latitude",
  *     required=false,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="address",
- *     in="formData",
+ *     in="query",
  *     description="Address",
  *     required=false,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="price",
- *     in="formData",
+ *     in="query",
  *     description="Price",
  *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="description",
- *     in="formData",
+ *     in="query",
  *     description="Description",
  *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="sold",
- *     in="formData",
+ *     in="query",
  *     description="(0 for unsold or 1 for sold)",
  *     required=false,
  *     type="string"
@@ -325,7 +325,7 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   summary="My Favourite jaggas",
  *   operationId="myFavouriteJaggas",
   *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -333,21 +333,21 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   ),
   *   @SWG\Parameter(
  *     name="per_page",
- *     in="formData",
+ *     in="query",
  *     description="Jaggas Per Page",
  *     required=false,
  *     type="integer"
  *   ),
    *   @SWG\Parameter(
  *     name="page_number",
- *     in="formData",
+ *     in="query",
  *     description="Per Page Number",
  *     required=false,
  *     type="integer"
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=true,
  *     type="integer"
@@ -424,7 +424,7 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   summary="My aggas",
  *   operationId="myJaggas",
   *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -432,21 +432,21 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   ),
   *   @SWG\Parameter(
  *     name="per_page",
- *     in="formData",
+ *     in="query",
  *     description="Jaggas Per Page",
  *     required=false,
  *     type="integer"
  *   ),
    *   @SWG\Parameter(
  *     name="page_number",
- *     in="formData",
+ *     in="query",
  *     description="Per Page Number",
  *     required=false,
  *     type="integer"
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=true,
  *     type="integer"
@@ -502,12 +502,12 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
 
 
        /**
- * @SWG\Patch(
+ * @SWG\Put(
  *   path="/jagga/update-jagga",
  *   summary="Update Jagga",
  *   operationId="updateJagga",
  *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -515,49 +515,49 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=true,
  *     type="integer"
  *   ),
   *   @SWG\Parameter(
  *     name="jagga_id",
- *     in="formData",
+ *     in="query",
  *     description="Jagga Id",
  *     required=true,
  *     type="integer"
  *   ),
   *   @SWG\Parameter(
  *     name="type",
- *     in="formData",
+ *     in="query",
  *     description="Type",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="phone_no",
- *     in="formData",
+ *     in="query",
  *     description="Phone no.",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lat",
- *     in="formData",
+ *     in="query",
  *     description=" Location - Longitude",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lon",
- *     in="formData",
+ *     in="query",
  *     description="Location - Latitude",
  *     required=false,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="address",
- *     in="formData",
+ *     in="query",
  *     description="Address",
  *     required=true,
  *     type="string"
@@ -571,21 +571,21 @@ return \Response::json(array(  'error' => false,  'data' => $result , 'message' 
  *   ),
     *   @SWG\Parameter(
  *     name="price",
- *     in="formData",
+ *     in="query",
  *     description="Price",
  *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="description",
- *     in="formData",
+ *     in="query",
  *     description="(0 for unsold or 1 for sold)",
  *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="sold",
- *     in="formData",
+ *     in="query",
  *     description="Sold",
  *     required=false,
  *     type="string"
@@ -726,7 +726,7 @@ $message = array();
  *   summary="Delete Jagga",
  *   operationId="deleteJagga",
  *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -823,7 +823,7 @@ $message = array();
  *   operationId="jdetail",
   *   @SWG\Parameter(
  *     name="id",
- *     in="formData",
+ *     in="query",
  *     description="Jagga Id",
  *     required=true,
  *     type="integer"

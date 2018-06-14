@@ -21,7 +21,7 @@
  *   summary="Add Room",
  *   operationId="addRoom",
  *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -46,9 +46,14 @@
  *     in="formData",
  *     description="Number of rooms",
  *     required=true,
- *     type="string"
- *   ),
-  *   @SWG\Parameter(
+ *     type="string",
+ *     enum = "[
+ *         '0' : 'tag1',
+  *         '1' : 'tag1',
+   *         '3' : 'tag1',
+ *        ]"
+ *     ),
+ *   @SWG\Parameter(
  *     name="no_of_room",
  *     in="formData",
  *     description="Number of floors",
@@ -231,7 +236,7 @@
  *   summary="My Favourite Rooms",
  *   operationId="myFavouriteRooms",
   *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -239,21 +244,21 @@
  *   ),
   *   @SWG\Parameter(
  *     name="per_page",
- *     in="formData",
+ *     in="query",
  *     description="Rooms Per Page",
  *     required=false,
  *     type="integer"
  *   ),
    *   @SWG\Parameter(
  *     name="page_number",
- *     in="formData",
+ *     in="query",
  *     description="Per Page Number",
  *     required=false,
  *     type="integer"
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=true,
  *     type="integer"
@@ -332,7 +337,7 @@
  *   operationId="rdetail",
   *   @SWG\Parameter(
  *     name="id",
- *     in="formData",
+ *     in="query",
  *     description="Room Id",
  *     required=true,
  *     type="integer"
@@ -389,119 +394,119 @@
  *   operationId="searchRoom",
   *   @SWG\Parameter(
  *     name="per_page",
- *     in="formData",
+ *     in="query",
  *     description="Rooms Per Page",
  *     required=false,
  *     type="integer"
  *   ),
    *   @SWG\Parameter(
  *     name="page_number",
- *     in="formData",
+ *     in="query",
  *     description="Per Page Number",
  *     required=false,
  *     type="integer"
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=false,
  *     type="integer"
  *   ),
   *   @SWG\Parameter(
  *     name="type",
- *     in="formData",
+ *     in="query",
  *     description="Type",
  *     required=false,
  *     type="string"
  *   ),
   *   @SWG\Parameter(
  *     name="no_of_floor",
- *     in="formData",
+ *     in="query",
  *     description="Number of rooms",
  *     required=false,
  *     type="string"
  *   ),
   *   @SWG\Parameter(
  *     name="no_of_room",
- *     in="formData",
+ *     in="query",
  *     description="Number of floors",
  *     required=false,
  *     type="string",
  *   ),
   *   @SWG\Parameter(
  *     name="kitchen",
- *     in="formData",
+ *     in="query",
  *     description="Kitchen",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="parking",
- *     in="formData",
+ *     in="query",
  *     description="Parking",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="restroom",
- *     in="formData",
+ *     in="query",
  *     description="Restroom",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="phone_no",
- *     in="formData",
+ *     in="query",
  *     description="Phone no.",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lat",
- *     in="formData",
+ *     in="query",
  *     description=" Location - Longitude",
  *     required=false,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lon",
- *     in="formData",
+ *     in="query",
  *     description="Location - Latitude",
  *     required=false,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="address",
- *     in="formData",
+ *     in="query",
  *     description="Address",
  *     required=false,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="preference",
- *     in="formData",
+ *     in="query",
  *     description="Preference",
  *     required=false,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="high_price",
- *     in="formData",
+ *     in="query",
  *     description="High Price",
  *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="low_price",
- *     in="formData",
+ *     in="query",
  *     description="Low Price",
  *     required=false,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="occupied",
- *     in="formData",
+ *     in="query",
  *     description="(0 for occupied or 1 for not occupied)",
  *     required=false,
  *     type="string"
@@ -563,11 +568,11 @@
 
         /**
  * @SWG\Get(
- *   path="/room/myRooms",
+ *   path="/room/my-rooms",
  *   summary="My Rooms",
  *   operationId="myRooms",
   *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -575,21 +580,21 @@
  *   ),
   *   @SWG\Parameter(
  *     name="per_page",
- *     in="formData",
+ *     in="query",
  *     description="Rooms Per Page",
  *     required=false,
  *     type="integer"
  *   ),
    *   @SWG\Parameter(
  *     name="page_number",
- *     in="formData",
+ *     in="query",
  *     description="Per Page Number",
  *     required=false,
  *     type="integer"
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=true,
  *     type="integer"
@@ -652,7 +657,7 @@ $message['context'] = 'Room';
  *   summary="Update Room",
  *   operationId="updateRoom",
  *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,
@@ -660,84 +665,84 @@ $message['context'] = 'Room';
  *   ),
  *   @SWG\Parameter(
  *     name="user_id",
- *     in="formData",
+ *     in="query",
  *     description="User Id",
  *     required=true,
  *     type="integer"
  *   ),
   *   @SWG\Parameter(
  *     name="room_id",
- *     in="formData",
+ *     in="query",
  *     description="Room Id",
  *     required=true,
  *     type="integer"
  *   ),
   *   @SWG\Parameter(
  *     name="type",
- *     in="formData",
+ *     in="query",
  *     description="Type",
  *     required=true,
  *     type="string"
  *   ),
   *   @SWG\Parameter(
  *     name="no_of_floor",
- *     in="formData",
+ *     in="query",
  *     description="Number of rooms",
  *     required=true,
  *     type="string"
  *   ),
   *   @SWG\Parameter(
  *     name="no_of_room",
- *     in="formData",
+ *     in="query",
  *     description="Number of floors",
  *     required=true,
  *     type="string",
  *   ),
   *   @SWG\Parameter(
  *     name="kitchen",
- *     in="formData",
+ *     in="query",
  *     description="Kitchen",
  *     required=true,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="parking",
- *     in="formData",
+ *     in="query",
  *     description="Parking",
  *     required=true,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="restroom",
- *     in="formData",
+ *     in="query",
  *     description="Restroom",
  *     required=true,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="phone_no",
- *     in="formData",
+ *     in="query",
  *     description="Phone no.",
  *     required=true,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lat",
- *     in="formData",
+ *     in="query",
  *     description=" Location - Longitude",
  *     required=true,
  *     type="string"
  *   ),
    *   @SWG\Parameter(
  *     name="loc_lon",
- *     in="formData",
+ *     in="query",
  *     description="Location - Latitude",
  *     required=true,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="address",
- *     in="formData",
+ *     in="query",
  *     description="Address",
  *     required=true,
  *     type="string"
@@ -751,28 +756,28 @@ $message['context'] = 'Room';
  *   ),
     *   @SWG\Parameter(
  *     name="preference",
- *     in="formData",
+ *     in="query",
  *     description="Preference",
  *     required=true,
  *     type="string"
  *   ),
     *   @SWG\Parameter(
  *     name="price",
- *     in="formData",
+ *     in="query",
  *     description="Price",
  *     required=true,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="description",
- *     in="formData",
+ *     in="query",
  *     description="Description",
  *     required=true,
  *     type="string"
  *   ),
      *   @SWG\Parameter(
  *     name="occupied",
- *     in="formData",
+ *     in="query",
  *     description="(0 for occupied or 1 for not occupied)",
  *     required=true,
  *     type="string"
@@ -911,7 +916,7 @@ $message['context'] = 'Room';
  *   summary="Delete Room",
  *   operationId="deleteRoom",
  *   @SWG\Parameter(
- *     name="access_token",
+ *     name="access-token",
  *     in="header",
  *     description="Access Token",
  *     required=true,

@@ -21,7 +21,7 @@
                 "operationId": "addJagga",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -117,71 +117,78 @@
                 "operationId": "searchJagga",
                 "parameters": [
                     {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Rooms Per Page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "query",
+                        "description": "Per Page Number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "type",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Type",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "phone_no",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Phone no.",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lat",
-                        "in": "formData",
+                        "in": "query",
                         "description": " Location - Longitude",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lon",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Location - Latitude",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "address",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Address",
                         "required": false,
                         "type": "string"
                     },
                     {
-                        "name": "image",
-                        "in": "formData",
-                        "description": "Room Image",
-                        "required": false,
-                        "type": "file"
-                    },
-                    {
                         "name": "price",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Price",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "description",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Description",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "sold",
-                        "in": "formData",
+                        "in": "query",
                         "description": "(0 for unsold or 1 for sold)",
                         "required": false,
                         "type": "string"
@@ -206,7 +213,7 @@
                 "operationId": "myFavouriteJaggas",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -214,21 +221,21 @@
                     },
                     {
                         "name": "per_page",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Jaggas Per Page",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "page_number",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Per Page Number",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": true,
                         "type": "integer"
@@ -253,7 +260,7 @@
                 "operationId": "myJaggas",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -261,21 +268,21 @@
                     },
                     {
                         "name": "per_page",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Jaggas Per Page",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "page_number",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Per Page Number",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": true,
                         "type": "integer"
@@ -295,12 +302,12 @@
             }
         },
         "/jagga/update-jagga": {
-            "patch": {
+            "put": {
                 "summary": "Update Jagga",
                 "operationId": "updateJagga",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -308,49 +315,49 @@
                     },
                     {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "jagga_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Jagga Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "type",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Type",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "phone_no",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Phone no.",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lat",
-                        "in": "formData",
+                        "in": "query",
                         "description": " Location - Longitude",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lon",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Location - Latitude",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "address",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Address",
                         "required": true,
                         "type": "string"
@@ -364,21 +371,21 @@
                     },
                     {
                         "name": "price",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Price",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "description",
-                        "in": "formData",
+                        "in": "query",
                         "description": "(0 for unsold or 1 for sold)",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "sold",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Sold",
                         "required": false,
                         "type": "string"
@@ -403,7 +410,7 @@
                 "operationId": "deleteJagga",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -444,7 +451,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Jagga Id",
                         "required": true,
                         "type": "integer"
@@ -469,7 +476,7 @@
                 "operationId": "addRoom",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -494,7 +501,8 @@
                         "in": "formData",
                         "description": "Number of rooms",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "enum": "[\r\n *         '0' : 'tag1',\r\n  *         '1' : 'tag1',\r\n   *         '3' : 'tag1',\r\n *        ]"
                     },
                     {
                         "name": "no_of_room",
@@ -551,13 +559,6 @@
                         "description": "Address",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "name": "image[]",
-                        "in": "formData",
-                        "description": "Room Image",
-                        "required": true,
-                        "type": "file"
                     },
                     {
                         "name": "preference",
@@ -607,7 +608,7 @@
                 "operationId": "myFavouriteRooms",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -615,21 +616,21 @@
                     },
                     {
                         "name": "per_page",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Rooms Per Page",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "page_number",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Per Page Number",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": true,
                         "type": "integer"
@@ -655,7 +656,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Room Id",
                         "required": true,
                         "type": "integer"
@@ -681,119 +682,119 @@
                 "parameters": [
                     {
                         "name": "per_page",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Rooms Per Page",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "page_number",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Per Page Number",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "type",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Type",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "no_of_floor",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Number of rooms",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "no_of_room",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Number of floors",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "kitchen",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Kitchen",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "parking",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Parking",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "restroom",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Restroom",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "phone_no",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Phone no.",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lat",
-                        "in": "formData",
+                        "in": "query",
                         "description": " Location - Longitude",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "loc_lon",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Location - Latitude",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "address",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Address",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "preference",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Preference",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "high_price",
-                        "in": "formData",
+                        "in": "query",
                         "description": "High Price",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "low_price",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Low Price",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "occupied",
-                        "in": "formData",
+                        "in": "query",
                         "description": "(0 for occupied or 1 for not occupied)",
                         "required": false,
                         "type": "string"
@@ -812,13 +813,13 @@
                 }
             }
         },
-        "/room/myRooms": {
+        "/room/my-rooms": {
             "get": {
                 "summary": "My Rooms",
                 "operationId": "myRooms",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -826,21 +827,21 @@
                     },
                     {
                         "name": "per_page",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Rooms Per Page",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "page_number",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Per Page Number",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": true,
                         "type": "integer"
@@ -865,7 +866,7 @@
                 "operationId": "updateRoom",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -873,84 +874,84 @@
                     },
                     {
                         "name": "user_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "User Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "room_id",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Room Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "type",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Type",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "no_of_floor",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Number of rooms",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "no_of_room",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Number of floors",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "kitchen",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Kitchen",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "parking",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Parking",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "restroom",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Restroom",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "phone_no",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Phone no.",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "loc_lat",
-                        "in": "formData",
+                        "in": "query",
                         "description": " Location - Longitude",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "loc_lon",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Location - Latitude",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "address",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Address",
                         "required": true,
                         "type": "string"
@@ -964,28 +965,28 @@
                     },
                     {
                         "name": "preference",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Preference",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "price",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Price",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "description",
-                        "in": "formData",
+                        "in": "query",
                         "description": "Description",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "occupied",
-                        "in": "formData",
+                        "in": "query",
                         "description": "(0 for occupied or 1 for not occupied)",
                         "required": true,
                         "type": "string"
@@ -1010,7 +1011,7 @@
                 "operationId": "deleteRoom",
                 "parameters": [
                     {
-                        "name": "access_token",
+                        "name": "access-token",
                         "in": "header",
                         "description": "Access Token",
                         "required": true,
@@ -1154,6 +1155,39 @@
                         "name": "id",
                         "in": "formData",
                         "description": "Jagga Id",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/all-room-jagga": {
+            "get": {
+                "summary": "All rooms and Jaggas",
+                "operationId": "allRoomJagga",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "formData",
+                        "description": "Rooms Per Page",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "formData",
+                        "description": "Per Page Number",
                         "required": false,
                         "type": "integer"
                     }
